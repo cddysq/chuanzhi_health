@@ -3,6 +3,11 @@
         PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-config.dtd">
 <configuration>
+    <!--配置别名-->
+    <typeAliases>
+        <package name="com.czjk.pojo"/>
+    </typeAliases>
+
     <!--配置分页-->
     <plugins>
         <plugin interceptor="com.github.pagehelper.PageInterceptor">
