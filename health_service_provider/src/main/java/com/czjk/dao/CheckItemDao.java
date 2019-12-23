@@ -25,4 +25,18 @@ public interface CheckItemDao {
      */
     Page<CheckItem> selectByCondition(String queryString);
 
+    /**
+     * 查找检查项是否和检查组有关联
+     *
+     * @param checkItemId 检查项id
+     * @return 检查项与检查组关联表中当前检查项关联总数
+     */
+    Long findCountByCheckItemId(Integer checkItemId);
+
+    /**
+     * 删除检查项
+     *
+     * @param id 检查项id
+     */
+    void deleteById(Integer id);
 }

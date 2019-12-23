@@ -7,10 +7,7 @@ import com.czjk.entity.QueryPageBean;
 import com.czjk.entity.Result;
 import com.czjk.pojo.CheckItem;
 import com.czjk.service.CheckItemService;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * @Author: Haotian
@@ -34,7 +31,6 @@ public class CheckItemController {
         try {
             checkItemService.add( checkitem );
         } catch (Exception e) {
-            e.printStackTrace();
             //服务调用失败
             return Result.builder().flag( false ).message( MessageConstant.ADD_CHECKGROUP_FAIL ).build();
         }
@@ -51,5 +47,26 @@ public class CheckItemController {
     @PostMapping("/findPage")
     public PageResult add(@RequestBody QueryPageBean queryPageBean) {
         return checkItemService.pageQuery( queryPageBean );
+    }
+
+    /**
+     * 删除检查项
+     *
+     * @param id 检查项id
+     * @return 成功或失败对应提示
+     */
+    @DeleteMapping("/delete/{id}")
+    public Result delete(@PathVariable("id") Integer id) {
+        try {
+            checkItemService.deleteById( id );
+        } catch (RuntimeException e) {
+            //存在关联关系回显
+            return Result.builder().flag( false ).message( e.getMessage() ).build();
+        } catch (Exception e) {
+            //服务调用失败
+            return Result.builder().flag( false ).message( MessageConstant.DELETE_CHECKITEM_FAIL ).build();
+        }
+        //服务调用成功
+        return Result.builder().flag( true ).message( MessageConstant.DELETE_CHECKITEM_SUCCESS ).build();
     }
 }

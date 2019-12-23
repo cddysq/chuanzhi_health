@@ -39,4 +39,16 @@ public class CheckItemServiceImpl implements CheckItemService {
                 //返回分页数据集合
                 .rows( page.getResult() ).build();
     }
+
+    @Override
+    public void deleteById(Integer id) {
+        //查询当前检查项是否和检查组关联
+        Long count = checkItemDao.findCountByCheckItemId( id );
+        if (count > 0) {
+            //当前检查项被引用，不能删除
+            throw new RuntimeException( "当前检查项被引用，不能删除" );
+        }
+        //不存在正常删除
+        checkItemDao.deleteById( id );
+    }
 }

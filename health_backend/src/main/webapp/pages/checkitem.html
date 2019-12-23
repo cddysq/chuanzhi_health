@@ -133,7 +133,7 @@
 
             <!-- 编辑标签弹层 -->
             <div class="add-form">
-                <el-dialog title="编辑检查项" :visible.sync="dialogFormVisible4Edit">
+                <el-dialog title="编辑检查项" :visible.sync="dialogFormVisible4Edit" v-if="dialogFormVisible4Edit">
                     <el-form ref="dataEditForm" :model="formData" :rules="rules" label-position="right"
                              label-width="100px">
                         <el-row>
@@ -291,18 +291,18 @@
                 this.$refs['dataAddForm'].validate((valid) => {
                     if (valid) {
                         //表单数据校验通过，发送ajax请求将表单数据提交到后台
-                        axios.put("/checkitem/add.do", this.formData).then((response) => {
+                        axios.post("/checkitem/add.do", this.formData).then((res) => {
                             //隐藏新增窗口
                             this.dialogFormVisible = false;
                             //判断后台返回的flag值，true表示添加操作成功，false为添加操作失败
-                            if (response.data.flag) {
+                            if (res.data.flag) {
                                 this.$message({
-                                    message: response.data.message,
+                                    message: res.data.message,
                                     type: 'success'
                                 });
                             } else {
                                 //添加数据失败
-                                this.$message.error(response.data.message);
+                                this.$message.error(res.data.message);
                             }
                             //不管操作成功与否都应该再次分页查询
                         }).finally(() => {
@@ -338,7 +338,9 @@
                 //弹出新增窗口
                 this.dialogFormVisible = true;
                 this.resetForm();
-                this.$refs['dataAddForm'].clearValidate() // 重置验证
+                if (this.$refs['dataAddForm'] !== undefined) {
+                    this.$refs['dataAddForm'].clearValidate() // 重置验证
+                }
             },
             // 弹出编辑窗口
             handleUpdate(row) {
@@ -366,30 +368,29 @@
             },
             // 删除
             handleDelete(row) {//row其实是一个json对象，json对象的结构为{"age":"0-100","attention":"无","code":"0011","id":38,"name":"白细胞计数","price":10.0,"remark":"白细胞计数","sex":"0","type":"2"}
-                //alert(row.id);
-                this.$confirm("你确定要删除当前数据吗？", "提示", {//确认框
+                this.$confirm("您确定要删除当前数据吗？", "提示", { //提示框
                     type: 'warning'
                 }).then(() => {
                     //用户点击确定按钮，发送ajax请求，将检查项ID提交到Controller进行处理
-                    axios.get("/checkitem/delete.do?id=" + row.id).then((res) => {
+                    axios.delete("/checkitem/delete/" + row.id + ".do").then((res) => { ///checkitem/delete/1.do
                         if (res.data.flag) {
-                            //执行成功
-                            //弹出成功提示信息
+                            //执行成功回显
                             this.$message({
-                                type: 'success',
-                                message: res.data.message
+                                message: res.data.message,
+                                type: 'success'
                             });
                             //重新进行分页查询
                             this.findPage();
                         } else {
-                            //执行失败
+                            //执行失败回显
                             this.$message.error(res.data.message);
                         }
                     });
+                    //用户点击取消
                 }).catch(() => {
                     this.$message({
-                        type: 'info',
-                        message: '操作已取消'
+                        message: '操作已取消',
+                        type: 'info'
                     });
                 });
             }
