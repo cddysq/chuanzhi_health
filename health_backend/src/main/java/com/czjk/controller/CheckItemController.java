@@ -69,4 +69,40 @@ public class CheckItemController {
         //服务调用成功
         return Result.builder().flag( true ).message( MessageConstant.DELETE_CHECKITEM_SUCCESS ).build();
     }
+
+    /**
+     * 编辑检查项
+     *
+     * @param checkitem 检查项信息
+     * @return 成功或失败对应提示
+     */
+    @PutMapping("/edit")
+    public Result edit(@RequestBody CheckItem checkitem) {
+        try {
+            checkItemService.edit( checkitem );
+        } catch (Exception e) {
+            //服务调用失败
+            return Result.builder().flag( false ).message( MessageConstant.EDIT_CHECKITEM_FAIL ).build();
+        }
+        //服务调用成功
+        return Result.builder().flag( true ).message( MessageConstant.EDIT_CHECKITEM_SUCCESS ).build();
+    }
+
+    /**
+     * 根据id查询检查项
+     *
+     * @param id 检查项id
+     * @return 指定检查项信息
+     */
+    @GetMapping("/findById/{id}")
+    public Result findById(@PathVariable("id") Integer id) {
+        try {
+            CheckItem checkItem = checkItemService.findById( id );
+            //服务调用成功
+            return Result.builder().flag( true ).message( MessageConstant.QUERY_CHECKITEM_SUCCESS ).data( checkItem ).build();
+        } catch (Exception e) {
+            //服务调用失败
+            return Result.builder().flag( false ).message( MessageConstant.QUERY_CHECKITEM_FAIL ).build();
+        }
+    }
 }

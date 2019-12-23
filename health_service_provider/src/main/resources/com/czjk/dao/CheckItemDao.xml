@@ -8,6 +8,38 @@
         values (#{code}, #{name}, #{sex}, #{age}, #{price}, #{type}, #{remark}, #{attention})
     </insert>
 
+    <!--更新检查项数据-->
+    <update id="edit" parameterType="CheckItem">
+        update t_checkitem
+        <set>
+            <if test="name != null">
+                name = #{name},
+            </if>
+            <if test="sex != null">
+                sex = #{sex},
+            </if>
+            <if test="code != null">
+                code = #{code},
+            </if>
+            <if test="age != null">
+                age = #{age},
+            </if>
+            <if test="price != null">
+                price = #{price},
+            </if>
+            <if test="type != null">
+                type = #{type},
+            </if>
+            <if test="attention != null">
+                attention = #{attention},
+            </if>
+            <if test="remark != null">
+                remark = #{remark},
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+
     <!--分页查询-->
     <select id="selectByCondition" parameterType="string" resultType="CheckItem">
         select * from t_checkitem
@@ -28,5 +60,12 @@
         select count(*)
         from t_checkgroup_checkitem
         where checkitem_id = #{checkitem_id}
+    </select>
+
+    <!--查找指定检查项数据-->
+    <select id="findById" parameterType="int" resultType="CheckItem">
+        select *
+        from t_checkitem
+        where id = #{id}
     </select>
 </mapper>

@@ -33,4 +33,19 @@ public interface CheckItemService {
      * @param id 检查项id
      */
     void deleteById(Integer id);
+
+    /**
+     * 编辑检查项信息
+     *
+     * @param checkitem 检查项数据
+     */
+    void edit(CheckItem checkitem);
+
+    /**
+     * 查询检查项信息
+     *
+     * @param id 检查项id
+     * @return 指定检查项数据
+     */
+    CheckItem findById(Integer id);
 }

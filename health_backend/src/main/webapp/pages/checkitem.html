@@ -261,7 +261,7 @@
                 this.$refs['dataEditForm'].validate((valid) => {
                     if (valid) {
                         //表单校验通过，可以提交数据
-                        axios.post("/checkitem/edit.do", this.formData).then((res) => {
+                        axios.put("/checkitem/edit.do", this.formData).then((res) => {
                             if (res.data.flag) {
                                 //弹出成功提示信息
                                 this.$message({
@@ -344,10 +344,10 @@
             },
             // 弹出编辑窗口
             handleUpdate(row) {
-                //弹出编辑窗口
-                this.dialogFormVisible4Edit = true;
                 //回显数据，发送ajax请求根据ID查询当前检查项数据
-                axios.get("/checkitem/findById.do?id=" + row.id).then((res) => {
+                axios.get("/checkitem/findById/" + row.id + ".do").then((res) => {
+                    //弹出编辑窗口
+                    this.dialogFormVisible4Edit = true;
                     if (res.data.flag) {
                         //进行回显，基于VUE的数据绑定实现
                         this.formData = res.data.data;

@@ -2,7 +2,6 @@ package com.czjk.dao;
 
 import com.czjk.pojo.CheckItem;
 import com.github.pagehelper.Page;
-import org.apache.ibatis.annotations.Param;
 
 /**
  * @Author: Haotian
@@ -39,4 +38,19 @@ public interface CheckItemDao {
      * @param id 检查项id
      */
     void deleteById(Integer id);
+
+    /**
+     * 更新检查项信息
+     *
+     * @param checkitem 检查项数据
+     */
+    void edit(CheckItem checkitem);
+
+    /**
+     * 根据id查询检查项
+     *
+     * @param id 检查项id
+     * @return 对应检查项数据
+     */
+    CheckItem findById(Integer id);
 }
