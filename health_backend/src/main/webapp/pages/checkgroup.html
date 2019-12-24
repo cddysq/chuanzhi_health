@@ -90,11 +90,11 @@
             </div>
             <!-- 新增标签弹层 -->
             <div class="add-form">
-                <el-dialog title="新增检查组" :visible.sync="dialogFormVisible" v-if="dialogFormVisible">
+                <el-dialog title="新增检查组" :visible.sync="dialogFormVisible">
                     <template>
                         <el-tabs v-model="activeName" type="card">
                             <el-tab-pane label="基本信息" name="first">
-                                <el-form ref="dataAddForm" label-position="right" :rules="rules" label-width="100px">
+                                <el-form label-position="right" label-width="100px">
                                     <el-row>
                                         <el-col :span="12">
                                             <el-form-item label="编码">
@@ -261,7 +261,7 @@
 </body>
 
 <script>
-    const vue = new Vue({
+    var vue = new Vue({
         el: '#app',
         data: {
             activeName: 'first',//添加/编辑窗口Tab标签名称
@@ -276,11 +276,7 @@
             tableData: [],//新增和编辑表单中对应的检查项列表数据
             checkitemIds: [],//新增和编辑表单中检查项对应的复选框，基于双向绑定可以进行回显和数据提交
             dialogFormVisible: false,//控制添加窗口显示/隐藏
-            dialogFormVisible4Edit: false,//控制编辑窗口显示/隐藏
-            rules: {//校验规则
-                code: [{required: true, message: '项目编码为必填项', trigger: 'blur'}],
-                name: [{required: true, message: '项目名称为必填项', trigger: 'blur'}]
-            }
+            dialogFormVisible4Edit: false//控制编辑窗口显示/隐藏
         },
         created() {
             this.findPage();
@@ -291,6 +287,24 @@
             },
             //添加
             handleAdd() {
+                //发送ajax请求将模型数据提交到后台处理
+                axios.post("/checkgroup/add.do?checkitemIds=" + this.checkitemIds, this.formData).then((res) => {
+                    //隐藏新增窗口
+                    this.dialogFormVisible = false;
+                    if (res.data.flag) {
+                        //新增成功，弹出成功提示
+                        this.$message({
+                            message: res.data.message,
+                            type: 'success'
+                        });
+                    } else {
+                        //新增失败，弹出错误提示
+                        this.$message.error(res.data.message);
+                    }
+                    //不管操作成功与否都应该再次分页查询
+                }).finally(() => {
+                    this.findPage();
+                });
             },
             //分页查询
             findPage() {
@@ -298,9 +312,6 @@
             // 重置表单
             resetForm() {
                 this.formData = {};
-                if (this.$refs['dataAddForm'] !== undefined) {
-                    this.$refs['dataAddForm'].clearValidate() // 重置验证
-                }
             },
             // 弹出添加窗口
             handleCreate() {
@@ -329,6 +340,6 @@
             handleDelete(row) {
             }
         }
-    });
+    })
 </script>
 </html>
