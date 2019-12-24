@@ -1,6 +1,7 @@
 package com.czjk.dao;
 
 import com.czjk.pojo.CheckGroup;
+import com.github.pagehelper.Page;
 
 import java.util.Map;
 
@@ -23,4 +24,12 @@ public interface CheckGroupDao {
      * @param map 检查组id合检查项id
      */
     void setCheckGroupAndCheckItem(Map<String, Integer> map);
+
+    /**
+     * 分页查询检查组
+     *
+     * @param queryString 分页条件
+     * @return 页面结果
+     */
+    Page<CheckGroup> selectByCondition(String queryString);
 }

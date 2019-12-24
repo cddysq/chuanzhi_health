@@ -2,6 +2,8 @@ package com.czjk.controller;
 
 import com.alibaba.dubbo.config.annotation.Reference;
 import com.czjk.constant.MessageConstant;
+import com.czjk.entity.PageResult;
+import com.czjk.entity.QueryPageBean;
 import com.czjk.entity.Result;
 import com.czjk.pojo.CheckGroup;
 import com.czjk.service.CheckGroupService;
@@ -39,5 +41,16 @@ public class CheckGroupController {
         }
         //新增检查组成功
         return Result.builder().flag( true ).message( MessageConstant.ADD_CHECKGROUP_SUCCESS ).build();
+    }
+
+    /**
+     * 分页查询
+     *
+     * @param queryPageBean 分页条件
+     * @return 分页结果数据封装对象
+     */
+    @PostMapping("/findPage")
+    public PageResult findPage(@RequestBody QueryPageBean queryPageBean) {
+        return checkGroupService.pageQuery( queryPageBean );
     }
 }

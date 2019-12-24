@@ -57,7 +57,7 @@
             <div class="filter-container">
                 <el-input placeholder="编码/名称/助记码" v-model="pagination.queryString" style="width: 200px;"
                           class="filter-item" @keyup.enter.native="handleFilter"></el-input>
-                <el-button @click="findPage()" class="dalfBut">查询</el-button>
+                <el-button @click="findPage(1)" class="dalfBut">查询</el-button>
                 <el-button type="primary" class="butT" @click="handleCreate()">新建</el-button>
             </div>
             <el-table size="small" current-row-key="id" :data="dataList" stripe highlight-current-row>
@@ -82,7 +82,7 @@
                 <el-pagination
                         class="pagiantion"
                         @current-change="handleCurrentChange"
-                        :current-page="pagination.currentPage"
+                        :current-page.sync="pagination.currentPage"
                         :page-size="pagination.pageSize"
                         layout="total, prev, pager, next, jumper"
                         :total="pagination.total">
@@ -261,7 +261,7 @@
 </body>
 
 <script>
-    var vue = new Vue({
+    const vue = new Vue({
         el: '#app',
         data: {
             activeName: 'first',//添加/编辑窗口Tab标签名称
@@ -279,9 +279,31 @@
             dialogFormVisible4Edit: false//控制编辑窗口显示/隐藏
         },
         created() {
+            //获取储存的当前分页
+            this.pagination.currentPage = this.getContextData("currentPage") || 1;
             this.findPage();
         },
         methods: {
+            //给sessionStorage存值
+            setContextData: function (key, value) {
+                if (typeof value == "string") {
+                    sessionStorage.setItem(key, value);
+                } else {
+                    sessionStorage.setItem(key, JSON.stringify(value));
+                }
+            },
+            // 从sessionStorage取值
+            getContextData: function (key) {
+                const str = sessionStorage.getItem(key);
+                if (typeof str == "string") {
+                    try {
+                        return JSON.parse(str);
+                    } catch (e) {
+                        return str;
+                    }
+                }
+                return;
+            },
             //编辑
             handleEdit() {
             },
@@ -307,7 +329,23 @@
                 });
             },
             //分页查询
-            findPage() {
+            findPage(page) {
+                if (page === 1) {
+                    this.pagination.currentPage = 1;
+                }
+
+                //封装分页参数
+                const param = {
+                    currentPage: this.pagination.currentPage,
+                    pageSize: this.pagination.pageSize,
+                    queryString: this.pagination.queryString
+                };
+                //发送ajax请求，提交分页相关参数
+                axios.post("/checkgroup/findPage.do", param).then((res) => {
+                    //为VUE对象的模型数据赋值，基于双向数据绑定展示到页面
+                    this.dataList = res.data.rows;//当前页展示的数据集合
+                    this.pagination.total = res.data.total;//总数据量
+                });
             },
             // 重置表单
             resetForm() {
@@ -335,11 +373,17 @@
             },
             //切换页码
             handleCurrentChange(currentPage) {
+                //设置最新的页码
+                this.pagination.currentPage = currentPage;
+                //储存当前页码
+                this.setContextData("currentPage", this.pagination.currentPage);
+                //重新调用findPage方法进行分页查询
+                this.findPage();
             },
             // 删除
             handleDelete(row) {
             }
         }
-    })
+    });
 </script>
 </html>

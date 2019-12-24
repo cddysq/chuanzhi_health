@@ -18,4 +18,12 @@
         insert into t_checkgroup_checkitem(checkgroup_id, checkitem_id)
         values (#{checkgroupId}, #{checkitemId})
     </update>
+
+    <!--分页查询-->
+    <select id="selectByCondition" parameterType="string" resultType="CheckGroup">
+        select * from t_checkgroup
+        <if test="value != null and value != '' and value.length > 0">
+            where code = #{value} or name = #{value} or helpCode = #{value}
+        </if>
+    </select>
 </mapper>

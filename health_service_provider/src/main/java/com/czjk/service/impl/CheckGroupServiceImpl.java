@@ -3,8 +3,13 @@ package com.czjk.service.impl;
 import cn.hutool.core.util.ArrayUtil;
 import com.alibaba.dubbo.config.annotation.Service;
 import com.czjk.dao.CheckGroupDao;
+import com.czjk.entity.PageResult;
+import com.czjk.entity.QueryPageBean;
 import com.czjk.pojo.CheckGroup;
+import com.czjk.pojo.CheckItem;
 import com.czjk.service.CheckGroupService;
+import com.github.pagehelper.Page;
+import com.github.pagehelper.PageHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -28,6 +33,19 @@ public class CheckGroupServiceImpl implements CheckGroupService {
         checkGroupDao.add( checkGroup );
         //设置检查组和检查项的多对多的关联关系，操作t_checkgroup_checkitem表
         this.setCheckGroupAndCheckItem( checkGroup.getId(), checkitemIds );
+    }
+
+    @Override
+    public PageResult pageQuery(QueryPageBean queryPageBean) {
+        //使用 PageHelper 完成分页查询
+        Page<CheckItem> page = PageHelper.startPage(
+                queryPageBean.getCurrentPage(), queryPageBean.getPageSize() ).
+                doSelectPage( () -> checkGroupDao.selectByCondition( queryPageBean.getQueryString() ) );
+        return PageResult.builder()
+                //返回总条数
+                .total( page.getTotal() )
+                //返回分页数据集合
+                .rows( page.getResult() ).build();
     }
 
     /**
