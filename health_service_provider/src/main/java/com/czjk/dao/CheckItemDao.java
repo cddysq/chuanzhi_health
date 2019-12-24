@@ -3,6 +3,8 @@ package com.czjk.dao;
 import com.czjk.pojo.CheckItem;
 import com.github.pagehelper.Page;
 
+import java.util.List;
+
 /**
  * @Author: Haotian
  * @Date: 2019/12/22 18:57
@@ -53,4 +55,11 @@ public interface CheckItemDao {
      * @return 对应检查项数据
      */
     CheckItem findById(Integer id);
+
+    /**
+     * 查询所有检查项
+     *
+     * @return 检查项信息集合
+     */
+    List<CheckItem> findAll();
 }

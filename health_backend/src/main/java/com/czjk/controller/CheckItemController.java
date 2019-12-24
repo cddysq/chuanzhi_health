@@ -1,5 +1,6 @@
 package com.czjk.controller;
 
+import cn.hutool.core.collection.CollUtil;
 import com.alibaba.dubbo.config.annotation.Reference;
 import com.czjk.constant.MessageConstant;
 import com.czjk.entity.PageResult;
@@ -8,6 +9,8 @@ import com.czjk.entity.Result;
 import com.czjk.pojo.CheckItem;
 import com.czjk.service.CheckItemService;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 /**
  * @Author: Haotian
@@ -104,5 +107,22 @@ public class CheckItemController {
             //服务调用失败
             return Result.builder().flag( false ).message( MessageConstant.QUERY_CHECKITEM_FAIL ).build();
         }
+    }
+
+    /**
+     * 查询所有检查项
+     *
+     * @return 检查项信息集合
+     */
+    @GetMapping("/findAll")
+    public Result findAll() {
+
+        List<CheckItem> checkItemList = checkItemService.findAll();
+        if (CollUtil.isNotEmpty( checkItemList )) {
+            //服务调用成功
+            return Result.builder().flag( true ).message( MessageConstant.QUERY_CHECKITEM_SUCCESS ).data( checkItemList ).build();
+        }
+        //服务调用失败
+        return Result.builder().flag( false ).message( MessageConstant.QUERY_CHECKITEM_FAIL ).build();
     }
 }

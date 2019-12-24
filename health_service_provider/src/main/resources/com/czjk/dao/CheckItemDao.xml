@@ -68,4 +68,10 @@
         from t_checkitem
         where id = #{id}
     </select>
+
+    <!--查找所有检查项数据-->
+    <select id="findAll" resultType="CheckItem">
+        select *
+        from t_checkitem
+    </select>
 </mapper>

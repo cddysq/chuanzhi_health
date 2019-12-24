@@ -20,6 +20,7 @@
     <!-- 集中定义依赖版本号 -->
     <properties>
         <junit.version>4.12</junit.version>
+        <hutool.version>5.0.3</hutool.version>
         <fastjson.version>1.2.62</fastjson.version>
         <lombok.version>1.18.8</lombok.version>
         <spring.version>5.0.5.RELEASE</spring.version>
@@ -230,6 +231,12 @@
                 <groupId>xml-apis</groupId>
                 <artifactId>xml-apis</artifactId>
                 <version>1.4.01</version>
+            </dependency>
+            <!--HuTool工具类-->
+            <dependency>
+                <groupId>cn.hutool</groupId>
+                <artifactId>hutool-all</artifactId>
+                <version>${hutool.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>

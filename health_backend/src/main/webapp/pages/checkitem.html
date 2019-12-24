@@ -335,9 +335,9 @@
             },
             // 弹出添加窗口
             handleCreate() {
+                this.resetForm();
                 //弹出新增窗口
                 this.dialogFormVisible = true;
-                this.resetForm();
                 if (this.$refs['dataAddForm'] !== undefined) {
                     this.$refs['dataAddForm'].clearValidate() // 重置验证
                 }
