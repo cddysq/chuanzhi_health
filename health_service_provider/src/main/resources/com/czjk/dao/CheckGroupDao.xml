@@ -80,4 +80,10 @@
         from t_checkgroup_checkitem
         where checkgroup_id = #{id}
     </select>
+
+    <!--查询所有检查组-->
+    <select id="findAll" resultType="CheckGroup">
+        select *
+        from t_checkgroup
+    </select>
 </mapper>

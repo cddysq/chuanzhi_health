@@ -59,4 +59,11 @@ public interface CheckGroupService {
      * @param id 检查组id
      */
     void deleteById(Integer id);
+
+    /**
+     * 查询所欲检查组
+     *
+     * @return 检查组信息集合
+     */
+    List<CheckGroup> findAll();
 }

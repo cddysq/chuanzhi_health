@@ -1,5 +1,6 @@
 package com.czjk.controller;
 
+import cn.hutool.core.collection.CollUtil;
 import com.alibaba.dubbo.config.annotation.Reference;
 import com.czjk.constant.MessageConstant;
 import com.czjk.entity.PageResult;
@@ -125,5 +126,22 @@ public class CheckGroupController {
         }
         //服务调用成功
         return Result.builder().flag( true ).message( MessageConstant.DELETE_CHECKGROUP_SUCCESS ).build();
+    }
+
+    /**
+     * 查询所有检查组
+     *
+     * @return 检查组信息集合
+     */
+    @GetMapping("/findAll")
+    public Result findAll() {
+
+        List<CheckGroup> checkItemList = checkGroupService.findAll();
+        if (CollUtil.isNotEmpty( checkItemList )) {
+            //服务调用成功
+            return Result.builder().flag( true ).message( MessageConstant.QUERY_CHECKGROUP_SUCCESS ).data( checkItemList ).build();
+        }
+        //服务调用失败
+        return Result.builder().flag( false ).message( MessageConstant.QUERY_CHECKGROUP_FAIL ).build();
     }
 }
