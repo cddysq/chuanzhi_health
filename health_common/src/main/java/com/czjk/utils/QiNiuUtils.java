@@ -1,5 +1,6 @@
 package com.czjk.utils;
 
+import cn.hutool.core.lang.Console;
 import com.google.gson.Gson;
 import com.qiniu.common.QiniuException;
 import com.qiniu.http.Response;
@@ -38,8 +39,7 @@ public class QiNiuUtils {
             //解析上传成功的结果
             DefaultPutRet putRet = new Gson().fromJson( response.bodyString(), DefaultPutRet.class );
             //putRet.key 文件名
-            System.out.println( putRet.key );
-            System.out.println( "上传成功" );
+            Console.log( "上传成功文件名为：{}", putRet.key );
         } catch (QiniuException ex) {
             Response r = ex.response;
             try {
@@ -67,8 +67,7 @@ public class QiNiuUtils {
             //解析上传成功的结果
             DefaultPutRet putRet = new Gson().fromJson( response.bodyString(), DefaultPutRet.class );
             //返回文件名
-            System.out.println( putRet.key );
-            System.out.println( "上传成功" );
+            Console.log( "上传成功文件名为：{}", putRet.key );
         } catch (QiniuException ex) {
             Response r = ex.response;
             System.err.println( r.toString() );
@@ -91,7 +90,7 @@ public class QiNiuUtils {
         BucketManager bucketManager = new BucketManager( auth, cfg );
         try {
             bucketManager.delete( BUCKET, fileName );
-            System.out.println( "删除成功" );
+            Console.log( "删除成功" );
         } catch (QiniuException ex) {
             //如果遇到异常，说明删除失败
             System.err.println( ex.code() );
