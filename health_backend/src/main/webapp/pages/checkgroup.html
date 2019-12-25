@@ -433,6 +433,31 @@
             },
             // 删除
             handleDelete(row) {
+                this.$confirm("您确定要删除当前数据吗？", "提示", { //提示框
+                    type: 'warning'
+                }).then(() => {
+                    //用户点击确定按钮，发送ajax请求，将检查项ID提交到Controller进行处理
+                    axios.delete("/checkgroup/delete/" + row.id + ".do").then((res) => {
+                        if (res.data.flag) {
+                            //执行成功回显
+                            this.$message({
+                                message: res.data.message,
+                                type: 'success'
+                            });
+                            //重新进行分页查询
+                            this.findPage();
+                        } else {
+                            //执行失败回显
+                            this.$message.error(res.data.message);
+                        }
+                    });
+                    //用户点击取消
+                }).catch(() => {
+                    this.$message({
+                        message: '操作已取消',
+                        type: 'info'
+                    });
+                });
             }
         }
     });

@@ -52,6 +52,13 @@
         where checkgroup_id = #{id}
     </delete>
 
+    <!--删除检查组-->
+    <delete id="deleteById" parameterType="int">
+        delete
+        from t_checkgroup
+        where id = #{id}
+    </delete>
+
     <!--分页查询-->
     <select id="selectByCondition" parameterType="string" resultType="CheckGroup">
         select * from t_checkgroup

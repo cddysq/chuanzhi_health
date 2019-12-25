@@ -69,6 +69,14 @@ public class CheckGroupServiceImpl implements CheckGroupService {
         this.setCheckGroupAndCheckItem( checkGroup.getId(), checkItemIds );
     }
 
+    @Override
+    public void deleteById(Integer id) {
+        //根据检查组id清理中间表关联关系）
+        checkGroupDao.deleteAssociation( id );
+        //删除检查组信息
+        checkGroupDao.deleteById( id );
+    }
+
     /**
      * 设置检查组合和检查项的关联关系
      *

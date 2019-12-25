@@ -108,4 +108,22 @@ public class CheckGroupController {
         //服务调用成功
         return Result.builder().flag( true ).message( MessageConstant.EDIT_CHECKGROUP_SUCCESS ).build();
     }
+
+    /**
+     * 删除检查组
+     *
+     * @param id 检查组id
+     * @return 成功或失败对应提示
+     */
+    @DeleteMapping("/delete/{id}")
+    public Result delete(@PathVariable("id") Integer id) {
+        try {
+            checkGroupService.deleteById( id );
+        } catch (Exception e) {
+            //服务调用失败
+            return Result.builder().flag( false ).message( MessageConstant.DELETE_CHECKGROUP_FAIL ).build();
+        }
+        //服务调用成功
+        return Result.builder().flag( true ).message( MessageConstant.DELETE_CHECKGROUP_SUCCESS ).build();
+    }
 }

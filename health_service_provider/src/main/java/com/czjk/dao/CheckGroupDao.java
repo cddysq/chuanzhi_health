@@ -63,4 +63,11 @@ public interface CheckGroupDao {
      * @param id 检查组id
      */
     void deleteAssociation(Integer id);
+
+    /**
+     * 删除检查组
+     *
+     * @param id 检查组id
+     */
+    void deleteById(Integer id);
 }

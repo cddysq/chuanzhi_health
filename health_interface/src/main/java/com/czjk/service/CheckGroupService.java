@@ -52,4 +52,11 @@ public interface CheckGroupService {
      * @param checkItemIds 与检查组关联的检查项id
      */
     void edit(CheckGroup checkGroup, Integer[] checkItemIds);
+
+    /**
+     * 删除检查组
+     *
+     * @param id 检查组id
+     */
+    void deleteById(Integer id);
 }
