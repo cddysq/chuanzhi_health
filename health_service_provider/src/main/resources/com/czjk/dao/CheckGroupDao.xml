@@ -19,11 +19,58 @@
         values (#{checkgroupId}, #{checkitemId})
     </update>
 
+    <!--根据ID动态修改检查组相关字段-->
+    <update id="edit" parameterType="CheckGroup">
+        update t_checkgroup
+        <set>
+            <if test="name != null">
+                name = #{name},
+            </if>
+            <if test="sex != null">
+                sex = #{sex},
+            </if>
+            <if test="code != null">
+                code = #{code},
+            </if>
+            <if test="helpCode != null">
+                helpCode = #{helpCode},
+            </if>
+            <if test="attention != null">
+                attention = #{attention},
+            </if>
+            <if test="remark != null">
+                remark = #{remark},
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+
+    <!--根据检查组ID清理关联的检查项信息-->
+    <delete id="deleteAssociation" parameterType="int">
+        delete
+        from t_checkgroup_checkitem
+        where checkgroup_id = #{id}
+    </delete>
+
     <!--分页查询-->
     <select id="selectByCondition" parameterType="string" resultType="CheckGroup">
         select * from t_checkgroup
         <if test="value != null and value != '' and value.length > 0">
             where code = #{value} or name = #{value} or helpCode = #{value}
         </if>
+    </select>
+
+    <!--根据ID查询检查组-->
+    <select id="findById" parameterType="int" resultType="CheckGroup">
+        select *
+        from t_checkgroup
+        where id = #{id}
+    </select>
+
+    <!--根据检查组ID查询关联的多个检查项ID，查询中间关系表-->
+    <select id="findCheckItemIdsByCheckGroupId" parameterType="int" resultType="int">
+        select checkitem_id
+        from t_checkgroup_checkitem
+        where checkgroup_id = #{id}
     </select>
 </mapper>

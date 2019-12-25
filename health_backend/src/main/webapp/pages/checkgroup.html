@@ -85,12 +85,13 @@
                         :current-page.sync="pagination.currentPage"
                         :page-size="pagination.pageSize"
                         layout="total, prev, pager, next, jumper"
-                        :total="pagination.total">
+                        :total="pagination.total"
+                        v-if="pagination.total != 0">
                 </el-pagination>
             </div>
             <!-- 新增标签弹层 -->
             <div class="add-form">
-                <el-dialog title="新增检查组" :visible.sync="dialogFormVisible">
+                <el-dialog title="新增检查组" :visible.sync="dialogFormVisible" v-if="dialogFormVisible">
                     <template>
                         <el-tabs v-model="activeName" type="card">
                             <el-tab-pane label="基本信息" name="first">
@@ -174,7 +175,7 @@
 
             <!-- 编辑标签弹层 -->
             <div class="add-form">
-                <el-dialog title="编辑检查组" :visible.sync="dialogFormVisible4Edit">
+                <el-dialog title="编辑检查组" :visible.sync="dialogFormVisible4Edit" v-if="dialogFormVisible4Edit">
                     <template>
                         <el-tabs v-model="activeName" type="card">
                             <el-tab-pane label="基本信息" name="first">
@@ -306,11 +307,29 @@
             },
             //编辑
             handleEdit() {
+                //发送ajax请求，将修改后的表单数据（检查组基本信息、勾选的检查项）提交到后台进行处理
+                axios.put("/checkgroup/edit/" + this.checkitemIds + ".do", this.formData).then((res) => {
+                    if (res.data.flag) {
+                        //弹出成功提示信息
+                        this.$message({
+                            type: 'success',
+                            message: res.data.message
+                        });
+                    } else {
+                        //执行失败
+                        this.$message.error(res.data.message);
+                    }
+                }).finally(() => {
+                    //不管成功还是失败，都调用分页查询方法
+                    this.findPage();
+                    //隐藏编辑窗口
+                    this.dialogFormVisible4Edit = false;
+                });
             },
             //添加
             handleAdd() {
                 //发送ajax请求将模型数据提交到后台处理
-                axios.post("/checkgroup/add.do?checkitemIds=" + this.checkitemIds, this.formData).then((res) => {
+                axios.post("/checkgroup/add/" + this.checkitemIds + ".do", this.formData).then((res) => {
                     //隐藏新增窗口
                     this.dialogFormVisible = false;
                     if (res.data.flag) {
@@ -350,13 +369,13 @@
             // 重置表单
             resetForm() {
                 this.formData = {};
+                this.checkitemIds = []; //重置选中的检查项
             },
             // 弹出添加窗口
             handleCreate() {
                 this.resetForm();
                 this.dialogFormVisible = true;
                 this.activeName = 'first';//默认选中first对应的tab
-                this.checkitemIds = []; //重置选中的检查项
                 //发送ajax请求，查询所有的检查项信息，转为json，赋值给tableData
                 axios.get("/checkitem/findAll.do").then((res) => {
                     if (res.data.flag) {
@@ -370,6 +389,38 @@
             },
             // 弹出编辑窗口
             handleUpdate(row) {
+                this.resetForm();
+                //发送ajax请求，根据检查组ID查询当前检查组数据，用于基本信息的回显
+                axios.get("/checkgroup/findById/" + row.id + ".do").then((res) => {
+                    if (res.data.flag) {
+                        //显示编辑窗口
+                        this.dialogFormVisible4Edit = true;
+                        this.activeName = 'first';
+                        //为模型数据赋值，通过VUE数据双向绑定进行信息的回显
+                        this.formData = res.data.data;
+                    } else {
+                        //查询数据失败
+                        this.$message.error(res.data.message);
+                    }
+                });
+                //发送ajax请求，查询所有的检查项数据，用于展示检查项列表
+                axios.get("/checkitem/findAll.do").then((res) => {
+                    if (res.data.flag) {
+                        //查询检查项数据成功
+                        this.tableData = res.data.data;
+                        //发送ajax请求，根据检查组ID查询当前检查组包含的检查项ID，用于页面复选框回显
+                        axios.get("/checkgroup/findCheckItemIdsByCheckGroupId/" + row.id + ".do").then((res) => {
+                            if (res.data.flag) {
+                                this.checkitemIds = res.data.data;
+                            } else {
+                                this.$message.error(res.data.message);
+                            }
+                        });
+                    } else {
+                        //查询检查项数据失败
+                        this.$message.error(res.data.message);
+                    }
+                });
             },
             //切换页码
             handleCurrentChange(currentPage) {

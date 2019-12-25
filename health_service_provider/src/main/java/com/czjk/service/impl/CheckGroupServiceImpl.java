@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -46,6 +47,26 @@ public class CheckGroupServiceImpl implements CheckGroupService {
                 .total( page.getTotal() )
                 //返回分页数据集合
                 .rows( page.getResult() ).build();
+    }
+
+    @Override
+    public CheckGroup findById(Integer id) {
+        return checkGroupDao.findById( id );
+    }
+
+    @Override
+    public List<Integer> findCheckItemIdsByCheckGroupId(Integer id) {
+        return checkGroupDao.findCheckItemIdsByCheckGroupId( id );
+    }
+
+    @Override
+    public void edit(CheckGroup checkGroup, Integer[] checkItemIds) {
+        //修改检查组基本信息，操作检查组t_checkgroup表
+        checkGroupDao.edit( checkGroup );
+        //根据检查组id删除中间表数据（清理原有关联关系）
+        checkGroupDao.deleteAssociation( checkGroup.getId() );
+        //建立检查组和检查项的最新关联关系
+        this.setCheckGroupAndCheckItem( checkGroup.getId(), checkItemIds );
     }
 
     /**
