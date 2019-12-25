@@ -118,7 +118,7 @@
             </div>
             <!-- 新增标签弹层 -->
             <div class="add-form">
-                <el-dialog title="新增套餐" :visible.sync="dialogFormVisible">
+                <el-dialog title="新增套餐" :visible.sync="dialogFormVisible" v-if="dialogFormVisible">
                     <template>
                         <el-tabs v-model="activeName" type="card">
                             <el-tab-pane label="基本信息" name="first">
@@ -268,10 +268,10 @@
             },
             //上传图片之前执行
             beforeAvatarUpload(file) {
-                const isJPG = file.type === 'image/jpeg';
+                const isJPG = file.type === 'image/jpeg' || file.type === 'image/png';
                 const isLt2M = file.size / 1024 / 1024 < 2;
                 if (!isJPG) {
-                    this.$message.error('上传套餐图片只能是 JPG 格式!');
+                    this.$message.error('上传套餐图片只能是 JPG或PNG 格式!');
                 }
                 if (!isLt2M) {
                     this.$message.error('上传套餐图片大小不能超过 2MB!');
@@ -280,6 +280,23 @@
             },
             //添加
             handleAdd() {
+                //发送ajax请求，将表单数据（套餐基本信息、检查组ID）提交到后台进行处理
+                axios.post('/setmeal/add/' + this.checkgroupIds + ".do", this.formData).then((res) => {
+                    //隐藏新增窗口
+                    this.dialogFormVisible = false;
+                    if (res.data.flag) {
+                        //添加成功
+                        this.$message({
+                            type: 'success',
+                            message: res.data.message
+                        });
+                    } else {
+                        //添加失败
+                        this.$message.error(res.data.message)
+                    }
+                }).finally(() => {
+                    this.findPage();
+                })
             },
             //分页查询
             findPage() {

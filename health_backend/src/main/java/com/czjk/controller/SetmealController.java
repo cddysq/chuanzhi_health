@@ -1,17 +1,16 @@
 package com.czjk.controller;
 
-import cn.hutool.core.io.FileTypeUtil;
 import cn.hutool.core.util.IdUtil;
+import com.alibaba.dubbo.config.annotation.Reference;
 import com.czjk.constant.MessageConstant;
 import com.czjk.entity.Result;
+import com.czjk.pojo.Setmeal;
+import com.czjk.service.SetmealService;
 import com.czjk.utils.QiNiuUtils;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
-import java.io.InputStream;
 import java.util.Objects;
 
 /**
@@ -22,6 +21,8 @@ import java.util.Objects;
 @RestController
 @RequestMapping("/setmeal")
 public class SetmealController {
+    @Reference
+    private SetmealService setmealService;
 
     /**
      * 文件上传
@@ -47,5 +48,24 @@ public class SetmealController {
         }
         //服务调用成功
         return Result.builder().flag( true ).message( MessageConstant.PIC_UPLOAD_SUCCESS ).data( filename ).build();
+    }
+
+    /**
+     * 新增体检套餐
+     *
+     * @param setmeal       套餐信息
+     * @param checkGroupIds 检查组id集合
+     * @return 新增是够成功
+     */
+    @PostMapping("/add/{checkGroupIds}")
+    public Result add(@RequestBody Setmeal setmeal, @PathVariable("checkGroupIds") Integer[] checkGroupIds) {
+        try {
+            setmealService.add( setmeal, checkGroupIds );
+        } catch (Exception e) {
+            //新增套餐失败
+            return Result.builder().flag( false ).message( MessageConstant.ADD_SETMEAL_FAIL ).build();
+        }
+        //新增套餐成功
+        return Result.builder().flag( true ).message( MessageConstant.ADD_SETMEAL_SUCCESS ).build();
     }
 }
