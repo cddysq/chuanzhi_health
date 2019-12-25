@@ -3,12 +3,15 @@ package com.czjk.controller;
 import cn.hutool.core.util.IdUtil;
 import com.alibaba.dubbo.config.annotation.Reference;
 import com.czjk.constant.MessageConstant;
+import com.czjk.constant.RedisConstant;
 import com.czjk.entity.Result;
 import com.czjk.pojo.Setmeal;
 import com.czjk.service.SetmealService;
 import com.czjk.utils.QiNiuUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import redis.clients.jedis.JedisPool;
 
 import java.io.IOException;
 import java.util.Objects;
@@ -23,6 +26,8 @@ import java.util.Objects;
 public class SetmealController {
     @Reference
     private SetmealService setmealService;
+    @Autowired
+    private JedisPool jedisPool;
 
     /**
      * 文件上传
@@ -41,6 +46,8 @@ public class SetmealController {
         try {
             //将文件上传到七牛云服务器
             QiNiuUtils.uploadToQiNiu( imgFile.getBytes(), filename );
+            //将上传图片名称存入Redis，基于Redis的Set集合存储
+            jedisPool.getResource().sadd( RedisConstant.SETMEAL_PIC_RESOURCES, filename );
         } catch (IOException e) {
             e.printStackTrace();
             //服务调用失败

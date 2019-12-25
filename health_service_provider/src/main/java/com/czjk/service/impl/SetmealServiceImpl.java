@@ -2,11 +2,13 @@ package com.czjk.service.impl;
 
 import cn.hutool.core.util.ArrayUtil;
 import com.alibaba.dubbo.config.annotation.Service;
+import com.czjk.constant.RedisConstant;
 import com.czjk.dao.SetmealDao;
 import com.czjk.pojo.Setmeal;
 import com.czjk.service.SetmealService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
+import redis.clients.jedis.JedisPool;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -21,12 +23,16 @@ import java.util.Map;
 public class SetmealServiceImpl implements SetmealService {
     @Autowired
     private SetmealDao setmealDao;
+    @Autowired
+    private JedisPool jedisPool;
 
     @Override
     public void add(Setmeal setmeal, Integer[] checkGroupIds) {
         setmealDao.add( setmeal );
         //绑定套餐和检查组的多对多关系
         this.setSetmealAndCheckGroup( setmeal.getId(), checkGroupIds );
+        //将图片名称保存到Redis
+        jedisPool.getResource().sadd( RedisConstant.SETMEAL_PIC_DB_RESOURCES, setmeal.getImg() );
     }
 
     /**
