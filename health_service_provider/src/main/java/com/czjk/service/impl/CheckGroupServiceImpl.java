@@ -90,8 +90,8 @@ public class CheckGroupServiceImpl implements CheckGroupService {
      */
     public void setCheckGroupAndCheckItem(Integer checkGroupId, Integer[] checkitemIds) {
         if (ArrayUtil.isNotEmpty( checkitemIds )) {
-            Map<String, Integer> map = new HashMap<>( 0 );
             for (Integer checkitemId : checkitemIds) {
+                Map<String, Integer> map = new HashMap<>( 0 );
                 map.put( "checkgroupId", checkGroupId );
                 map.put( "checkitemId", checkitemId );
                 checkGroupDao.setCheckGroupAndCheckItem( map );

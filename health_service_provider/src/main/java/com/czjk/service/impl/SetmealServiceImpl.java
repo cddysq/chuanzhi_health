@@ -43,8 +43,8 @@ public class SetmealServiceImpl implements SetmealService {
      */
     public void setSetmealAndCheckGroup(Integer setmealId, Integer[] checkGroupIds) {
         if (ArrayUtil.isNotEmpty( checkGroupIds )) {
-            Map<String, Integer> map = new HashMap<>( 0 );
             for (Integer checkGroupId : checkGroupIds) {
+                Map<String, Integer> map = new HashMap<>( 0 );
                 map.put( "setmealId", setmealId );
                 map.put( "checkgroupId", checkGroupId );
                 setmealDao.setSetmealAndCheckGroup( map );
