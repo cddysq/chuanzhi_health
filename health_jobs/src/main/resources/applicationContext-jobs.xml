@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+							http://www.springframework.org/schema/beans/spring-beans.xsd
+							http://www.springframework.org/schema/context
+							http://www.springframework.org/schema/context/spring-context.xsd">
+    <!--开启spring注解使用-->
+    <context:annotation-config/>
+    <!--注册自定义Job-->
+    <bean id="clearImgJob" class="com.czjk.jobs.ClearImgJob"/>
+    <bean id="clearRedis" class="com.czjk.jobs.ClearRedis"/>
+
+    <bean id="jobDetail"
+          class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+        <!-- 注入目标对象 -->
+        <property name="targetObject" ref="clearImgJob"/>
+        <!-- 注入目标方法 -->
+        <property name="targetMethod" value="clearImg"/>
+    </bean>
+    <bean id="redisDetail"
+          class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+        <!-- 注入目标对象 -->
+        <property name="targetObject" ref="clearRedis"/>
+        <!-- 注入目标方法 -->
+        <property name="targetMethod" value="clearRedis"/>
+    </bean>
+
+    <!-- 注册一个触发器，指定任务触发的时间 -->
+    <bean id="imgTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+        <!-- 注入JobDetail -->
+        <property name="jobDetail" ref="jobDetail"/>
+        <!-- 指定触发的时间，基于Cron表达式 -->
+        <property name="cronExpression">
+            <!--两小时一执行-->
+            <value>0 0 2 * * ?</value>
+        </property>
+    </bean>
+    <bean id="redisTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+        <!-- 注入JobDetail -->
+        <property name="jobDetail" ref="redisDetail"/>
+        <!-- 指定触发的时间，基于Cron表达式 -->
+        <property name="cronExpression">
+            <!--每月最后一天凌晨4点执行-->
+            <value>0 0 4 L * ? *</value>
+        </property>
+    </bean>
+
+    <!-- 注册一个统一的调度工厂，通过这个调度工厂调度任务 -->
+    <bean id="scheduler" class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
+        <!-- 注入多个触发器 -->
+        <property name="triggers">
+            <list>
+                <ref bean="imgTrigger"/>
+                <ref bean="redisTrigger"/>
+            </list>
+        </property>
+    </bean>
+</beans>
