@@ -11,6 +11,7 @@
     <!--配置分页-->
     <plugins>
         <plugin interceptor="com.github.pagehelper.PageInterceptor">
+            <!--分页合理化参数 pageNum<=0 时会查询第一页， pageNum>pages（超过总数时），会查询最后一页.-->
             <property name="reasonable" value="true"/>
         </plugin>
     </plugins>

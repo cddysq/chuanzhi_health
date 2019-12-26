@@ -1,5 +1,7 @@
 package com.czjk.service;
 
+import com.czjk.entity.PageResult;
+import com.czjk.entity.QueryPageBean;
 import com.czjk.pojo.Setmeal;
 
 /**
@@ -15,4 +17,12 @@ public interface SetmealService {
      * @param checkGroupIds 检查组id集合
      */
     void add(Setmeal setmeal, Integer[] checkGroupIds);
+
+    /**
+     * 分页查询
+     *
+     * @param queryPageBean 分页条件封装类
+     * @return 分页结果
+     */
+    PageResult pageQuery(QueryPageBean queryPageBean);
 }

@@ -113,7 +113,8 @@
                         :current-page="pagination.currentPage"
                         :page-size="pagination.pageSize"
                         layout="total, prev, pager, next, jumper"
-                        :total="pagination.total">
+                        :total="pagination.total"
+                        v-if="pagination.total != 0">
                 </el-pagination>
             </div>
             <!-- 新增标签弹层 -->
@@ -242,7 +243,7 @@
             activeName: 'first',//添加/编辑窗口Tab标签名称
             pagination: {//分页相关属性
                 currentPage: 1,
-                pageSize: 10,
+                pageSize: 6,
                 total: 100,
                 queryString: null,
             },
@@ -253,9 +254,31 @@
             dialogFormVisible: false//控制添加窗口显示/隐藏
         },
         created() {
+            //获取储存的当前分页
+            this.pagination.currentPage = this.getContextData("currentPage") || 1;
             this.findPage();
         },
         methods: {
+            //给sessionStorage存值
+            setContextData: function (key, value) {
+                if (typeof value == "string") {
+                    sessionStorage.setItem(key, value);
+                } else {
+                    sessionStorage.setItem(key, JSON.stringify(value));
+                }
+            },
+            // 从sessionStorage取值
+            getContextData: function (key) {
+                const str = sessionStorage.getItem(key);
+                if (typeof str == "string") {
+                    try {
+                        return JSON.parse(str);
+                    } catch (e) {
+                        return str;
+                    }
+                }
+                return;
+            },
             //文件上传成功后的钩子，res为服务端返回的值，file为当前上传的文件封装成的js对象
             handleAvatarSuccess(res, file) {
                 this.imageUrl = "http://q320dbwus.bkt.clouddn.com/" + res.data;
@@ -300,6 +323,17 @@
             },
             //分页查询
             findPage() {
+                //封装分页参数
+                const param = {
+                    currentPage: this.pagination.currentPage,
+                    pageSize:this.pagination.pageSize,
+                    queryString: this.pagination.queryString
+                };
+                //请求后台
+                axios.post("/setmeal/findPage.do", param).then((res) => {
+                    this.dataList = res.data.rows;//当前页展示的数据集合
+                    this.pagination.total = res.data.total;//总数据量
+                });
             },
             // 重置表单
             resetForm() {
@@ -326,6 +360,12 @@
             },
             //切换页码
             handleCurrentChange(currentPage) {
+                //设置最新的页码
+                this.pagination.currentPage = currentPage;
+                //储存当前页码
+                this.setContextData("currentPage", this.pagination.currentPage);
+                //重新调用findPage方法进行分页查询
+                this.findPage();
             }
         }
     });

@@ -4,8 +4,12 @@ import cn.hutool.core.util.ArrayUtil;
 import com.alibaba.dubbo.config.annotation.Service;
 import com.czjk.constant.RedisConstant;
 import com.czjk.dao.SetmealDao;
+import com.czjk.entity.PageResult;
+import com.czjk.entity.QueryPageBean;
 import com.czjk.pojo.Setmeal;
 import com.czjk.service.SetmealService;
+import com.github.pagehelper.Page;
+import com.github.pagehelper.PageHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 import redis.clients.jedis.JedisPool;
@@ -33,6 +37,19 @@ public class SetmealServiceImpl implements SetmealService {
         this.setSetmealAndCheckGroup( setmeal.getId(), checkGroupIds );
         //将图片名称保存到Redis
         jedisPool.getResource().sadd( RedisConstant.SETMEAL_PIC_DB_RESOURCES, setmeal.getImg() );
+    }
+
+    @Override
+    public PageResult pageQuery(QueryPageBean queryPageBean) {
+        //使用 PageHelper 完成分页查询
+        Page<Setmeal> page = PageHelper.startPage(
+                queryPageBean.getCurrentPage(), queryPageBean.getPageSize() ).
+                doSelectPage( () -> setmealDao.selectByCondition( queryPageBean.getQueryString() ) );
+        return PageResult.builder()
+                //返回总条数
+                .total( page.getTotal() )
+                //返回分页数据集合
+                .rows( page.getResult() ).build();
     }
 
     /**

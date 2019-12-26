@@ -4,6 +4,8 @@ import cn.hutool.core.util.IdUtil;
 import com.alibaba.dubbo.config.annotation.Reference;
 import com.czjk.constant.MessageConstant;
 import com.czjk.constant.RedisConstant;
+import com.czjk.entity.PageResult;
+import com.czjk.entity.QueryPageBean;
 import com.czjk.entity.Result;
 import com.czjk.pojo.Setmeal;
 import com.czjk.service.SetmealService;
@@ -74,5 +76,16 @@ public class SetmealController {
         }
         //新增套餐成功
         return Result.builder().flag( true ).message( MessageConstant.ADD_SETMEAL_SUCCESS ).build();
+    }
+
+    /**
+     * 分页查询
+     *
+     * @param queryPageBean 分页条件
+     * @return 分页结果数据封装对象
+     */
+    @PostMapping("/findPage")
+    public PageResult findPage(@RequestBody QueryPageBean queryPageBean) {
+        return setmealService.pageQuery( queryPageBean );
     }
 }
