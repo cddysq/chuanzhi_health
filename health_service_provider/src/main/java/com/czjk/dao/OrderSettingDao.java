@@ -3,6 +3,8 @@ package com.czjk.dao;
 import com.czjk.pojo.OrderSetting;
 
 import java.util.Date;
+import java.util.List;
+import java.util.Map;
 
 /**
  * @Author: Haotian
@@ -31,4 +33,12 @@ public interface OrderSettingDao {
      * @param orderSetting 预约数据
      */
     void add(OrderSetting orderSetting);
+
+    /**
+     * 根据月份查询预约设置信息
+     *
+     * @param map 当前月起始日期和结束日期
+     * @return 当前月所有预约数据
+     */
+    List<OrderSetting> getOrderSettingByMonth(Map<String, String> map);
 }

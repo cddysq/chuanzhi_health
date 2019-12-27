@@ -225,6 +225,7 @@
                     this.days.push(dayobject);
                 }
 
+                //打开快速查看页面预约效果
                 /*this.leftobj = [
                     { date: 1, number: 120, reservations: 1 },
                     { date: 3, number: 120, reservations: 1 },
@@ -232,6 +233,16 @@
                     { date: 6, number: 120, reservations: 1 },
                     { date: 8, number: 120, reservations: 1 }
                 ];*/
+                //发送ajax请求，根据当前页面对应的月份查询预约设置信息，封装成相应结果赋值给leftobj模型数据，用于页面展示
+                axios.get("/ordersetting/getOrderSettingByMonth/" + this.currentYear + "-" + this.currentMonth + ".do").then((res) => {
+                    if (res.data.flag) {
+                        //查询成功进行赋值
+                        this.leftobj = res.data.data;
+                    } else {
+                        //失败提示
+                        this.$message().error(res.data.message);
+                    }
+                })
             },
             //切换到当前月份
             goCurrentMonth: function (year, month) {

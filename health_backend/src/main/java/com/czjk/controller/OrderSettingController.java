@@ -9,14 +9,13 @@ import com.czjk.constant.MessageConstant;
 import com.czjk.entity.Result;
 import com.czjk.pojo.OrderSetting;
 import com.czjk.service.OrderSettingService;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @Author: Haotian
@@ -58,6 +57,25 @@ public class OrderSettingController {
             e.printStackTrace();
             //导入失败回显
             return Result.builder().flag( false ).message( MessageConstant.IMPORT_ORDERSETTING_FAIL ).build();
+        }
+    }
+
+    /**
+     * 根据日期查询预约设置数据(获取指定日期所在月份的预约设置数据)
+     *
+     * @param date 当前日期 date格式为：yyyy-MM
+     * @return 当前月预约数据
+     */
+    @GetMapping("getOrderSettingByMonth/{date}")
+    public Result getOrderSettingByMonth(@PathVariable("date") String date) {
+        try {
+            List<Map<String, Object>> list = orderSettingService.getOrderSettingByMonth( date );
+            //查询预约成功回显
+            return Result.builder().flag( true ).message( MessageConstant.GET_ORDERSETTING_SUCCESS ).data( list ).build();
+        } catch (Exception e) {
+            e.printStackTrace();
+            //查询预约失败回显
+            return Result.builder().flag( false ).message( MessageConstant.GET_ORDERSETTING_FAIL ).build();
         }
     }
 }

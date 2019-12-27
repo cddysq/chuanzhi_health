@@ -3,6 +3,7 @@ package com.czjk.service;
 import com.czjk.pojo.OrderSetting;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * @Author: Haotian
@@ -16,4 +17,12 @@ public interface OrderSettingService {
      * @param data 预约设置信息
      */
     void add(List<OrderSetting> data);
+
+    /**
+     * 查询当前月的预约信息
+     *
+     * @param date 当前日期 参数格式为：yyyy-MM
+     * @return 当前月预约信息
+     */
+    List<Map<String, Object>> getOrderSettingByMonth(String date);
 }
