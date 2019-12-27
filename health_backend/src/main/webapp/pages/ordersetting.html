@@ -144,6 +144,35 @@
         methods: {
             //预约设置
             handleOrderSet(day) {
+                this.$prompt('请输入可预约人数', '预约设置', {
+                    confirmButtonText: '确定',
+                    cancelButtonText: '取消',
+                    inputPattern: /^[0-9]*[1-9][0-9]*$/,
+                    inputErrorMessage: '只能输入正整数'
+                }).then(({value}) => {
+                    //发送ajax请求根据日期修改可预约人数
+                    axios.put("/ordersetting/editNumberByDate.do", {
+                        number: value,
+                        orderDate: this.formatDate(day.getFullYear(), day.getMonth() + 1, day.getDate()) //日期
+                    }).then((res) => {
+                        if (res.data.flag) {
+                            //查询初始化页面，进行数据刷新
+                            this.initData(this.formatDate(day.getFullYear(), day.getMonth() + 1, 1));
+                            this.$message({
+                                type: 'success',
+                                message: res.data.message
+                            });
+                        } else {
+                            //查询失败提示
+                            this.$message.error(res.data.message);
+                        }
+                    });
+                }).catch(() => {
+                    this.$message({
+                        type: 'info',
+                        message: '取消输入'
+                    });
+                });
             },
             //上传之前进行文件格式校验
             beforeUpload(file) {

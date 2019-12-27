@@ -25,4 +25,11 @@ public interface OrderSettingService {
      * @return 当前月预约信息
      */
     List<Map<String, Object>> getOrderSettingByMonth(String date);
+
+    /**
+     * 根根据指定日期修改可预约人数
+     *
+     * @param orderSetting 预约数据
+     */
+    void updateNumberByDate(OrderSetting orderSetting);
 }

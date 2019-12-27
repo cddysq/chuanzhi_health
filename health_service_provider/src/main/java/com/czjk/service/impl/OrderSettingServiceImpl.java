@@ -67,4 +67,17 @@ public class OrderSettingServiceImpl implements OrderSettingService {
         }
         return data;
     }
+
+    @Override
+    public void updateNumberByDate(OrderSetting orderSetting) {
+        //判断当前日期是否已经进行了预约设置
+        Long countByOrderDate = orderSettingDao.findCountByOrderDate( orderSetting.getOrderDate() );
+        if (countByOrderDate > 0) {
+            //已经存在，执行更新操作
+            orderSettingDao.updateNumberByOrderDate( orderSetting );
+        } else {
+            //不存在，执行添加操作
+            orderSettingDao.add( orderSetting );
+        }
+    }
 }

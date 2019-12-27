@@ -78,4 +78,23 @@ public class OrderSettingController {
             return Result.builder().flag( false ).message( MessageConstant.GET_ORDERSETTING_FAIL ).build();
         }
     }
+
+    /**
+     * 根根据指定日期修改可预约人数
+     *
+     * @param orderSetting 预约数据
+     * @return 是否修改成功
+     */
+    @PutMapping("/editNumberByDate")
+    public Result editNumberByDate(@RequestBody OrderSetting orderSetting) {
+        try {
+            orderSettingService.updateNumberByDate( orderSetting );
+            //修改成功回显
+            return Result.builder().flag( true ).message( MessageConstant.ORDERSETTING_SUCCESS ).build();
+        } catch (Exception e) {
+            e.printStackTrace();
+            //修改失败回显
+            return Result.builder().flag( false ).message( MessageConstant.ORDERSETTING_FAIL ).build();
+        }
+    }
 }
