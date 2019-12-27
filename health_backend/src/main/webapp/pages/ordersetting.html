@@ -176,13 +176,13 @@
             },
             //初始化当前页要展示的日期
             initData: function (cur) {
-                var date;
-                var index = 0;   //控制显示预定的天数
+                let date;
+                let index = 0;   //控制显示预定的天数
                 if (cur) {
                     date = new Date(cur);
                 } else {
-                    var now = new Date();
-                    var d = new Date(this.formatDate(now.getFullYear(), now.getMonth(), 1));
+                    let now = new Date();
+                    let d = new Date(this.formatDate(now.getFullYear(), now.getMonth(), 1));
                     d.setDate(35);
                     date = new Date(this.formatDate(d.getFullYear(), d.getMonth() + 1, 1));
                 }
@@ -190,37 +190,37 @@
                 this.currentYear = date.getFullYear();
                 this.currentMonth = date.getMonth() + 1;
                 this.currentWeek = date.getDay(); // //本月第一天是周几（周日0 周六 6）
-                var today = new Date();
+                let today = new Date();
                 this.LocalMonth = today.getMonth() + 1;
-                if (this.currentWeek == 0) {
+                if (this.currentWeek === 0) {
                     this.currentWeek = 7;
                 }
-                var str = this.formatDate(this.currentYear, this.currentMonth, this.currentDay);
+                const str = this.formatDate(this.currentYear, this.currentMonth, this.currentDay);
                 this.days.length = 0;
                 // 今天是周日，放在第一行第7个位置，前面6个
                 //初始化本周
-                for (var i = this.currentWeek - 1; i >= 0; i--) {
-                    var d = new Date(str);
+                for (let i = this.currentWeek - 1; i >= 0; i--) {
+                    let d = new Date(str);
                     d.setDate(d.getDate() - i);
-                    var dayobject = {};
+                    let dayobject = {};
                     dayobject.day = d;
-                    var now = new Date();
+                    now = new Date();
                     if (d.getDate() === (now.getDate()) && d.getMonth() === now.getMonth() && d.getFullYear() === now.getFullYear()) {
                         dayobject.index = index++;//从今天开始显示供预定的数量
-                    } else if (index != 0 && index < 3)
+                    } else if (index !== 0 && index < 3)
                         dayobject.index = index++;//从今天开始3天内显示供预定的数量
                     this.days.push(dayobject);//将日期放入data 中的days数组 供页面渲染使用
                 }
                 //其他周
-                for (var i = 1; i <= 35 - this.currentWeek; i++) {
-                    var d = new Date(str);
+                for (let i = 1; i <= 35 - this.currentWeek; i++) {
+                    const d = new Date(str);
                     d.setDate(d.getDate() + i);
-                    var dayobject = {};//dayobject   {day:date,index:2}
+                    let dayobject = {};//dayobject   {day:date,index:2}
                     dayobject.day = d;
-                    var now = new Date();
+                    now = new Date();
                     if (d.getDate() === (now.getDate()) && d.getMonth() === now.getMonth() && d.getFullYear() === now.getFullYear()) {
                         dayobject.index = index++;
-                    } else if (index != 0 && index < 3)
+                    } else if (index !== 0 && index < 3)
                         dayobject.index = index++;
                     this.days.push(dayobject);
                 }
@@ -235,7 +235,7 @@
             },
             //切换到当前月份
             goCurrentMonth: function (year, month) {
-                var d = new Date();
+                let d = new Date();
                 this.initData(this.formatDate(d.getFullYear(), d.getMonth() + 1, 1));
             },
             //向前一个月
@@ -243,22 +243,22 @@
                 // setDate(0); 上月最后一天
                 // setDate(-1); 上月倒数第二天
                 // setDate(dx) 参数dx为 上月最后一天的前后dx天
-                var d = new Date(this.formatDate(year, month, 1));
+                let d = new Date(this.formatDate(year, month, 1));
                 d.setDate(0);
                 this.initData(this.formatDate(d.getFullYear(), d.getMonth() + 1, 1));
             },
             //向后一个月
             pickNext: function (year, month) {
-                var d = new Date(this.formatDate(year, month, 1));
+                let d = new Date(this.formatDate(year, month, 1));
                 d.setDate(35);////获取指定天之后的日期
                 this.initData(this.formatDate(d.getFullYear(), d.getMonth() + 1, 1));
             },
-            // 返回 类似 2016-01-02 格式的字符串
+            // 返回 类似 2019-11-12 格式的字符串
             formatDate: function (year, month, day) {
-                var y = year;
-                var m = month;
+                const y = year;
+                let m = month;
                 if (m < 10) m = "0" + m;
-                var d = day;
+                let d = day;
                 if (d < 10) d = "0" + d;
                 return y + "-" + m + "-" + d
             }
