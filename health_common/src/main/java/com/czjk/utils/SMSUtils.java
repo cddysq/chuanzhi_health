@@ -16,8 +16,8 @@ import com.aliyuncs.profile.DefaultProfile;
  */
 public class SMSUtils {
 
-    private static final String ACCESSKEYID = "LTAI4FvW1pB55RxgiDA4FNJV";
-    private static final String ACCESSKEYSECRET = "e52TSSbx3ZbgUJbU5FUsyUH9z5QgTw";
+    private static final String ACCESSKEYID = "";
+    private static final String ACCESSKEYSECRET = "";
 
     /**
      * 发送短信验证码
