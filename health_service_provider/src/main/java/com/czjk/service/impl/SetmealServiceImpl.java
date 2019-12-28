@@ -15,6 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 import redis.clients.jedis.JedisPool;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -50,6 +51,11 @@ public class SetmealServiceImpl implements SetmealService {
                 .total( page.getTotal() )
                 //返回分页数据集合
                 .rows( page.getResult() ).build();
+    }
+
+    @Override
+    public List<Setmeal> findAll() {
+        return setmealDao.findAll();
     }
 
     /**

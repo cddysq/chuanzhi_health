@@ -4,6 +4,8 @@ import com.czjk.entity.PageResult;
 import com.czjk.entity.QueryPageBean;
 import com.czjk.pojo.Setmeal;
 
+import java.util.List;
+
 /**
  * @Author: Haotian
  * @Date: 2019/12/25 19:57
@@ -25,4 +27,11 @@ public interface SetmealService {
      * @return 分页结果
      */
     PageResult pageQuery(QueryPageBean queryPageBean);
+
+    /**
+     * 查询所有套餐
+     *
+     * @return 获取是否成功
+     */
+    List<Setmeal> findAll();
 }

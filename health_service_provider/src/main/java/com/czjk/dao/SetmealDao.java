@@ -3,6 +3,7 @@ package com.czjk.dao;
 import com.czjk.pojo.Setmeal;
 import com.github.pagehelper.Page;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -32,4 +33,11 @@ public interface SetmealDao {
      * @return 页面结果
      */
     Page<Setmeal> selectByCondition(String queryString);
+
+    /**
+     * 查询所有套餐
+     *
+     * @return 获取是否成功
+     */
+    List<Setmeal> findAll();
 }

@@ -10,7 +10,8 @@ import org.junit.Test;
 public class QiNiuTest {
     @Test
     public void upload() {
-        QiNiuUtils.uploadToQiNiu( "E:\\图片\\Hatsune Miku.jpg", null );
+        QiNiuUtils.uploadToQiNiu( "E:\\黑马资料\\传智健康资料\\day04\\素材\\图片资源\\ac3b5a4d-33a5-4f37-bd49-99e06ce17d202.jpg",
+                "68c7c13f-8fc2-46c3-b5d6-f7ec7992dc6e1.jpg" );
     }
 
     @Test

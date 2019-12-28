@@ -25,4 +25,8 @@
             where code = #{value} or name = #{value} or helpCode = #{value}
         </if>
     </select>
+    <select id="findAll" resultType="Setmeal">
+        select *
+        from t_setmeal
+    </select>
 </mapper>
