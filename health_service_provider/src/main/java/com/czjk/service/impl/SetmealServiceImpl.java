@@ -58,6 +58,11 @@ public class SetmealServiceImpl implements SetmealService {
         return setmealDao.findAll();
     }
 
+    @Override
+    public Setmeal findById(Integer id) {
+        return setmealDao.findById( id );
+    }
+
     /**
      * 绑定套餐和检查组的多对多关系
      *

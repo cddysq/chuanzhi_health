@@ -34,4 +34,12 @@ public interface SetmealService {
      * @return 获取是否成功
      */
     List<Setmeal> findAll();
+
+    /**
+     * 根据套餐ID查询套餐详情
+     *
+     * @param id 套餐id
+     * @return 套餐基本信息、套餐对应的检查组信息、检查组对应的检查项信息
+     */
+    Setmeal findById(Integer id);
 }

@@ -2,6 +2,27 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.czjk.dao.SetmealDao">
+    <resultMap id="baseResultMap" type="Setmeal">
+        <!--配置数据库字段与pojo的映射关系-->
+        <id column="id" property="id"/>
+        <result column="name" property="name"/>
+        <result column="code" property="code"/>
+        <result column="helpCode" property="helpCode"/>
+        <result column="sex" property="sex"/>
+        <result column="age" property="age"/>
+        <result column="price" property="price"/>
+        <result column="remark" property="remark"/>
+        <result column="attention" property="attention"/>
+        <result column="img" property="img"/>
+    </resultMap>
+    <resultMap id="findByIdResultMap" type="Setmeal" extends="baseResultMap">
+        <!--多对多映射 Setmeal中需要CheckGroup的数据-->
+        <collection property="checkGroups"
+                    ofType="CheckGroup"
+                    column="id"
+                    select="com.czjk.dao.CheckGroupDao.findCheckGroupById"/>
+    </resultMap>
+
     <!--插入套餐数据-->
     <insert id="add" parameterType="Setmeal">
         <selectKey resultType="int" order="AFTER" keyProperty="id">
@@ -28,5 +49,12 @@
     <select id="findAll" resultType="Setmeal">
         select *
         from t_setmeal
+    </select>
+
+    <!--根据套餐ID查询套餐详情（包含套餐基本信息、检查组信息、检查项信息）-->
+    <select id="findById" parameterType="int" resultMap="findByIdResultMap">
+        select *
+        from t_setmeal
+        where id = #{id}
     </select>
 </mapper>

@@ -1,6 +1,7 @@
 package com.czjk.dao;
 
 import com.czjk.pojo.CheckGroup;
+import com.czjk.pojo.CheckItem;
 import com.github.pagehelper.Page;
 
 import java.util.List;

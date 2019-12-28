@@ -4,17 +4,18 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0,user-scalable=no,minimal-ui">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0,user-scalable=no,minimal-ui">
     <meta name="description" content="">
     <meta name="author" content="">
     <link rel="icon" href="../img/asset-favico.ico">
     <title>预约详情</title>
-    <link rel="stylesheet" href="../css/page-health-orderDetail.css" />
+    <link rel="stylesheet" href="../css/page-health-orderDetail.css"/>
     <script src="../plugins/vue/vue.js"></script>
     <script src="../plugins/vue/axios-0.18.0.js"></script>
     <script src="../plugins/healthmobile.js"></script>
     <script>
-        var id = getUrlParam("id");
+        const id = getUrlParam("id");
     </script>
 </head>
 <body data-spy="scroll" data-target="#myNavbar" data-offset="150">
@@ -29,7 +30,7 @@
     <div class="contentBox">
         <div class="card">
             <div class="project-img">
-                <img :src="imgUrl" width="100%" height="100%" />
+                <img :src="imgUrl" width="100%" height="100%"/>
             </div>
             <div class="project-text">
                 <h4 class="tit">{{setmeal.name}}</h4>
@@ -79,22 +80,26 @@
     </div>
 </div>
 <script>
-    var vue = new Vue({
-        el:'#app',
-        data:{
-            imgUrl:null,//套餐对应的图片链接
-            setmeal:{}
+    const vue = new Vue({
+        el: '#app',
+        data: {
+            imgUrl: null,//套餐对应的图片链接
+            setmeal: {}
         },
-        methods:{
-            toOrderInfo(){
+        methods: {
+            toOrderInfo() {
                 window.location.href = "orderInfo.html?id=" + id;
             }
         },
-        mounted(){
-            axios.post("/setmeal/findById.do?id=" + id).then((response) => {
-                if(response.data.flag){
-                    this.setmeal = response.data.data;
-                    this.imgUrl = 'http://pqjroc654.bkt.clouddn.com/' + this.setmeal.img;
+        mounted() {
+            axios.get("/setmeal/findById/" + id + ".do?").then((res) => {
+                if (res.data.flag) {
+                    //查询成功
+                    this.setmeal = res.data.data;
+                    this.imgUrl = 'http://q320dbwus.bkt.clouddn.com/' + this.setmeal.img;
+                } else {
+                    //查询失败
+                    this.$message.error(res.data.message)
                 }
             });
         }
