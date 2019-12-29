@@ -55,5 +55,4 @@ public class FreemarkerTest {
         //8.关闭输出流对象
         writer.close();
     }
-
 }
