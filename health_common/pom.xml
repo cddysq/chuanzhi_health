@@ -170,5 +170,11 @@
             <artifactId>aliyun-java-sdk-dysmsapi</artifactId>
             <version>2.0.0</version>
         </dependency>
+        <!--freemarker页面静态化依赖-->
+        <dependency>
+            <groupId>org.freemarker</groupId>
+            <artifactId>freemarker</artifactId>
+            <version>2.3.28</version>
+        </dependency>
     </dependencies>
 </project>
