@@ -15,7 +15,7 @@
     <resultMap id="findByIdResultMap" type="CheckGroup" extends="baseResultMap">
         <!--检查组和检查项多对多关联查询-->
         <collection property="checkItems"
-                    javaType="ArrayList"
+                    ofType="CheckItem"
                     column="id"
                     select="com.czjk.dao.CheckItemDao.findCheckItemById"/>
     </resultMap>
