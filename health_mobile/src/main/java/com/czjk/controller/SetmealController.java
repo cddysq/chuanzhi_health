@@ -58,4 +58,22 @@ public class SetmealController {
             return Result.builder().flag( false ).message( MessageConstant.QUERY_SETMEAL_FAIL ).build();
         }
     }
+
+    /**
+     * 根据套餐ID查询套餐
+     *
+     * @param id 套餐id
+     * @return 套餐基本信息
+     */
+    @GetMapping("/findBySetmeal/{id}")
+    public Result findBySetmeal(@PathVariable("id") Integer id) {
+        try {
+            Setmeal setmeal = setmealService.findBySetmeal( id );
+            //查詢成功回显
+            return Result.builder().flag( true ).message( MessageConstant.QUERY_SETMEAL_SUCCESS ).data( setmeal ).build();
+        } catch (Exception e) {
+            //查失败功回显
+            return Result.builder().flag( false ).message( MessageConstant.QUERY_SETMEAL_FAIL ).build();
+        }
+    }
 }

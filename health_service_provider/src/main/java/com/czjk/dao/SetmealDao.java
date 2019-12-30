@@ -48,4 +48,12 @@ public interface SetmealDao {
      * @return 套餐基本信息、套餐对应的检查组信息、检查组对应的检查项信息
      */
     Setmeal findById(Integer id);
+
+    /**
+     * 根据套餐ID查询套餐
+     *
+     * @param id 套餐id
+     * @return 套餐基本信息
+     */
+    Setmeal findBySetmeal(Integer id);
 }

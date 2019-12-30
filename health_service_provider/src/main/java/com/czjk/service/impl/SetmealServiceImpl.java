@@ -87,7 +87,7 @@ public class SetmealServiceImpl implements SetmealService {
         for (Setmeal setmeal : list) {
             Map<String, Object> dataMap = new HashMap<>();
             //为模板提供对应id所有数据
-            dataMap.put( "setmeal",setmealDao.findById( setmeal.getId() ) );
+            dataMap.put( "setmeal", setmealDao.findById( setmeal.getId() ) );
             generateHtml( "mobile_setmeal_detail.ftl", "setmeal_detail_" + setmeal.getId() + ".html", dataMap );
         }
     }
@@ -143,6 +143,11 @@ public class SetmealServiceImpl implements SetmealService {
     @Override
     public Setmeal findById(Integer id) {
         return setmealDao.findById( id );
+    }
+
+    @Override
+    public Setmeal findBySetmeal(Integer id) {
+        return setmealDao.findBySetmeal( id );
     }
 
     /**
