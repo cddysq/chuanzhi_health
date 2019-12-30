@@ -13,17 +13,23 @@ import java.util.Map;
 public interface OrderDao {
     public void add(Order order);
 
-    public List<Order> findByCondition(Order order);
+    /**
+     * 根据体检预约信息查询订单
+     *
+     * @param order 体检预约信息
+     * @return 预约信息
+     */
+    List<Order> findByCondition(Order order);
 
-    public Map findById4Detail(Integer id);
+    Map findById4Detail(Integer id);
 
-    public Integer findOrderCountByDate(String date);
+    Integer findOrderCountByDate(String date);
 
-    public Integer findOrderCountAfterDate(String date);
+    Integer findOrderCountAfterDate(String date);
 
-    public Integer findVisitsCountByDate(String date);
+    Integer findVisitsCountByDate(String date);
 
-    public Integer findVisitsCountAfterDate(String date);
+    Integer findVisitsCountAfterDate(String date);
 
-    public List<Map> findHotSetmeal();
+    List<Map> findHotSetmeal();
 }
