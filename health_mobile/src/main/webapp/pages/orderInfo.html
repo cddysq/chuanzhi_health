@@ -150,7 +150,7 @@
                     return false;
                 }
                 //发送ajax请求，提交表单数据到后台进行业务处理
-                axios.post("/order/submit.do" + this.orderInfo).then((res) => {
+                axios.post("/order/submit.do", this.orderInfo).then((res) => {
                     if (res.data.flag) {
                         //预约成功，跳转到成功页面
                         window.location.href = "orderSuccess.html?orderId=" + res.data.data;
