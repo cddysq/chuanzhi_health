@@ -15,6 +15,11 @@ public interface MemberDao {
 
     Page<Member> selectByCondition(String queryString);
 
+    /**
+     * 添加会员
+     *
+     * @param member 会员信息
+     */
     void add(Member member);
 
     void deleteById(Integer id);

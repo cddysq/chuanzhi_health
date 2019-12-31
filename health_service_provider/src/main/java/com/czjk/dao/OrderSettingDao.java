@@ -21,13 +21,6 @@ public interface OrderSettingDao {
     Long findCountByOrderDate(Date orderDate);
 
     /**
-     * 更新当前日期的预约数据
-     *
-     * @param orderSetting 预约数据
-     */
-    void updateNumberByOrderDate(OrderSetting orderSetting);
-
-    /**
      * 添加预约数据
      *
      * @param orderSetting 预约数据
@@ -41,4 +34,26 @@ public interface OrderSettingDao {
      * @return 当前月所有预约数据
      */
     List<OrderSetting> getOrderSettingByMonth(Map<String, String> map);
+
+    /**
+     * 更新当前日期的预约数据
+     *
+     * @param orderSetting 预约数据
+     */
+    void updateNumberByOrderDate(OrderSetting orderSetting);
+
+    /**
+     * 更新已预约人数
+     *
+     * @param orderSetting 预约数据
+     */
+    void updateReservationsByOrderDate(OrderSetting orderSetting);
+
+    /**
+     * 根据预约日期查询预约设置信息
+     *
+     * @param orderDate 预约日期
+     * @return 当前预约日期的预约信息
+     */
+    OrderSetting findByOrderDate(Date orderDate);
 }

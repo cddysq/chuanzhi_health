@@ -15,6 +15,13 @@
         where orderDate = #{orderDate}
     </update>
 
+    <!--根据预约日期更新已预约人数-->
+    <update id="updateReservationsByOrderDate" parameterType="OrderSetting">
+        update t_ordersetting
+        set reservations = #{reservations}
+        where orderDate = #{orderDate}
+    </update>
+
     <!--根据预约日期查询预约条数-->
     <select id="findCountByOrderDate" parameterType="date" resultType="long">
         select count(*)
@@ -27,5 +34,12 @@
         select *
         from t_ordersetting
         where orderDate between #{dateBegin} and #{dateEnd}
+    </select>
+
+    <!--根据日期查询预约设置信息-->
+    <select id="findByOrderDate" parameterType="date" resultType="OrderSetting">
+        select *
+        from t_ordersetting
+        where orderDate = #{orderDate}
     </select>
 </mapper>
