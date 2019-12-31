@@ -1,0 +1,20 @@
+package com.czjk.service;
+
+import com.czjk.entity.Result;
+
+import java.util.Map;
+
+/**
+ * @Author: Haotian
+ * @Date: 2019/12/30 20:48
+ * @Description: 体检预约服务接口
+ */
+public interface OrderService {
+    /**
+     * 体检预约
+     *
+     * @param map 预约数据
+     * @return 是否预约成功
+     */
+    Result order(Map<String, Object> map);
+}
