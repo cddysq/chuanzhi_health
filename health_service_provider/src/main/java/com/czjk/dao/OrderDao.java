@@ -26,7 +26,13 @@ public interface OrderDao {
      */
     List<Order> findByCondition(Order order);
 
-    Map findById4Detail(Integer id);
+    /**
+     * 根据预约id查询预约信息，
+     *
+     * @param id 预约订单id
+     * @return 包括体检人信息、套餐信息
+     */
+    Map<String, Object> findById4Detail(Integer id);
 
     Integer findOrderCountByDate(String date);
 
