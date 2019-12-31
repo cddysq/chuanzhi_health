@@ -9,10 +9,7 @@ import com.czjk.pojo.Order;
 import com.czjk.service.OrderService;
 import com.czjk.utils.SMSUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import redis.clients.jedis.JedisPool;
 
 import java.util.Map;
@@ -31,6 +28,12 @@ public class OrderController {
     @Autowired
     private JedisPool jedisPool;
 
+    /**
+     * 用户预约
+     *
+     * @param map 表单数据
+     * @return 预约失败提示 or 预约成功跳转成功界面
+     */
     @PostMapping("/submit")
     public Result submitOrder(@RequestBody Map<String, Object> map) {
         String telephone = Convert.toStr( map.get( "telephone" ) );
@@ -62,5 +65,24 @@ public class OrderController {
             }
         }
         return result;
+    }
+
+    /**
+     * 根据预约订单id查询预约信息
+     *
+     * @param id 预约订单id
+     * @return 套餐信息和会员信息
+     */
+    @GetMapping("/findById/{id}")
+    public Result findById(@PathVariable("id") Integer id) {
+        try {
+            Map<String, Object> map = orderService.findById( id );
+            //查询成功
+            return Result.builder().flag( true ).message( MessageConstant.QUERY_ORDER_SUCCESS ).data( map ).build();
+        } catch (Exception e) {
+            e.printStackTrace();
+            //查询失败
+            return Result.builder().flag( false ).message( MessageConstant.QUERY_ORDER_FAIL ).build();
+        }
     }
 }
