@@ -38,7 +38,7 @@ public class OrderController {
     public Result submitOrder(@RequestBody Map<String, Object> map) {
         String telephone = Convert.toStr( map.get( "telephone" ) );
         String validateCode = Convert.toStr( map.get( "validateCode" ) );
-        //从Redis中获取缓存的验证码，key为手机号+RedisConstant.SENDTYPE_ORDER
+        //从Redis中获取缓存的体检预约验证码，key为手机号+RedisConstant.SENDTYPE_ORDER
         String validateCodeInRedis = jedisPool.getResource().get( telephone + RedisMessageConstant.SENDTYPE_ORDER );
         //校验手机验证码
         if (validateCodeInRedis == null || !validateCodeInRedis.equals( validateCode )) {
