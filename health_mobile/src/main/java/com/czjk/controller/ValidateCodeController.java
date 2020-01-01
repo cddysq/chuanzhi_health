@@ -24,6 +24,11 @@ public class ValidateCodeController {
     private JedisPool jedisPool;
 
     /**
+     * 随机生成6位数字验证码
+     */
+    private static String authCode = RandomUtil.randomNumbers( 6 );
+
+    /**
      * 用户在线体检预约发送验证码
      *
      * @param telephone 用户手机号
@@ -31,10 +36,8 @@ public class ValidateCodeController {
      */
     @PostMapping("/sendAppointmentOrder/{telephone}")
     public Result sendAppointmentOrder(@PathVariable("telephone") String telephone) {
-        //随机生成6位数字验证码
-        String authCode = RandomUtil.randomNumbers( 6 );
-        //给用户发送验证码
         try {
+            //给用户发送验证码
             SMSUtils.sendShortMessage( SMSUtils.VALIDATE_CODE, telephone, authCode );
         } catch (Exception e) {
             e.printStackTrace();
@@ -43,6 +46,21 @@ public class ValidateCodeController {
         }
         //验证码发送成功,将生成的验证码缓存到redis设置存活时时间(5分钟)
         jedisPool.getResource().setex( telephone + RedisMessageConstant.SENDTYPE_ORDER, 300, authCode );
+        return Result.builder().flag( true ).message( MessageConstant.SEND_VALIDATECODE_SUCCESS ).build();
+    }
+
+    @PostMapping("/send4Login/{telephone}")
+    public Result send4Login(@PathVariable("telephone") String telephone) {
+        try {
+            //给用户发送验证码
+            SMSUtils.sendShortMessage( SMSUtils.VALIDATE_CODE, telephone, authCode );
+        } catch (Exception e) {
+            e.printStackTrace();
+            //验证码发送失败
+            return Result.builder().flag( false ).message( MessageConstant.SEND_VALIDATECODE_FAIL ).build();
+        }
+        //验证码发送成功,将登录验证码缓存到redis设置存活时时间(5分钟)
+        jedisPool.getResource().setex( telephone + RedisMessageConstant.SENDTYPE_LOGIN, 300, authCode );
         return Result.builder().flag( true ).message( MessageConstant.SEND_VALIDATECODE_SUCCESS ).build();
     }
 
