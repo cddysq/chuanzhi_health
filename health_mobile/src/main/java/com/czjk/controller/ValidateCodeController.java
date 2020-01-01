@@ -49,6 +49,12 @@ public class ValidateCodeController {
         return Result.builder().flag( true ).message( MessageConstant.SEND_VALIDATECODE_SUCCESS ).build();
     }
 
+    /**
+     * 用户快速登录验证码
+     *
+     * @param telephone 用户手机号
+     * @return 验证码是否发送成功
+     */
     @PostMapping("/send4Login/{telephone}")
     public Result send4Login(@PathVariable("telephone") String telephone) {
         try {
@@ -63,5 +69,4 @@ public class ValidateCodeController {
         jedisPool.getResource().setex( telephone + RedisMessageConstant.SENDTYPE_LOGIN, 300, authCode );
         return Result.builder().flag( true ).message( MessageConstant.SEND_VALIDATECODE_SUCCESS ).build();
     }
-
 }
