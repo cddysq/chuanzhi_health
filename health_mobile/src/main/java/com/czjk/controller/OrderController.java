@@ -24,7 +24,6 @@ import java.util.Map;
 public class OrderController {
     @Reference
     private OrderService orderService;
-    ;
     @Autowired
     private JedisPool jedisPool;
 
