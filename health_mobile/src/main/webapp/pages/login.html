@@ -42,7 +42,7 @@
                 <div class="input-row">
                     <label>验证码</label>
                     <div class="loginInput">
-                        <input v-model="loginInfo.validateCode" style="width:80%" id='password' type="password"
+                        <input v-model="loginInfo.validateCode" style="width:80%" id='password' type="text"
                                placeholder="请输入验证码">
                     </div>
                 </div>
@@ -73,7 +73,13 @@
                 validateCodeButton = $("#validateCodeButton")[0];
                 clock = window.setInterval(doLoop, 1000); //一秒执行一次
                 axios.post("/validateCode/send4Login/" + telephone + ".do").then((res) => {
-                    if (!res.data.flag) {
+                    if (res.data.flag) {
+                        //验证码发送成功
+                        this.$message({
+                            type: 'success',
+                            message: res.data.message
+                        })
+                    } else {
                         //验证码发送失败
                         this.$message.error('验证码发送失败，请检查手机号输入是否正确');
                     }
@@ -86,13 +92,17 @@
                     this.$message.error('请输入正确的手机号');
                     return false;
                 }
-                axios.post("/login/check.do", this.loginInfo).then((response) => {
-                    if (response.data.flag) {
+                axios.post("/member/login.do", this.loginInfo).then((res) => {
+                    if (res.data.flag) {
+                        this.$message({
+                            type: 'success',
+                            message: res.data.message
+                        });
                         //登录成功,跳转到index.html
                         window.location.href = "index.html";
                     } else {
                         //失败，提示失败信息
-                        this.$message.error(response.data.message);
+                        this.$message.error(res.data.message);
                     }
                 });
             }
