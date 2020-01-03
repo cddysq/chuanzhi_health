@@ -255,6 +255,17 @@
                 }
                 return;
             },
+            //权限不足提示
+            showMessage(r) {
+                if (r == 'Error: Request failed with status code 403') {
+                    //权限不足
+                    this.$message.error('无访问权限');
+                    return false;
+                } else {
+                    this.$message.error('未知错误');
+                    return false;
+                }
+            },
             //编辑
             handleEdit() {
                 //进行表单校验
@@ -272,6 +283,8 @@
                                 //执行失败
                                 this.$message.error(res.data.message);
                             }
+                        }).catch((r) => {
+                            this.showMessage(r);
                         }).finally(() => {
                             //不管成功还是失败，都调用分页查询方法
                             this.findPage();
@@ -305,6 +318,8 @@
                                 this.$message.error(res.data.message);
                             }
                             //不管操作成功与否都应该再次分页查询
+                        }).catch((r) => {
+                            this.showMessage(r);
                         }).finally(() => {
                             this.findPage();
                         });
@@ -327,6 +342,8 @@
                     //解析Controller响应回的数据，为模型数据赋值
                     this.pagination.total = res.data.total;
                     this.dataList = res.data.rows;
+                }).catch((r) => {
+                    this.showMessage(r);
                 });
             },
             // 重置表单
@@ -355,6 +372,8 @@
                         //查询失败，弹出提示
                         this.$message.error(res.data.message);
                     }
+                }).catch((r) => {
+                    this.showMessage(r);
                 });
             },
             //切换页码
@@ -385,6 +404,9 @@
                             //执行失败回显
                             this.$message.error(res.data.message);
                         }
+                    }).catch((r) => {
+                        //调用异常权限提示
+                        this.showMessage(r);
                     });
                     //用户点击取消
                 }).catch(() => {

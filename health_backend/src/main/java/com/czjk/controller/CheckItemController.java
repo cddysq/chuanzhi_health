@@ -8,6 +8,7 @@ import com.czjk.entity.QueryPageBean;
 import com.czjk.entity.Result;
 import com.czjk.pojo.CheckItem;
 import com.czjk.service.CheckItemService;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -20,7 +21,10 @@ import java.util.List;
 @RestController
 @RequestMapping("/checkitem")
 public class CheckItemController {
-    @Reference //查找服务
+    /**
+     * 通过Dubbo在zk注册中心查找服务
+     */
+    @Reference
     private CheckItemService checkItemService;
 
     /**
@@ -30,6 +34,7 @@ public class CheckItemController {
      * @return 成功或失败对应提示
      */
     @PostMapping("/add")
+    @PreAuthorize("hasAuthority('CHECKITEM_ADD')")
     public Result add(@RequestBody CheckItem checkitem) {
         try {
             checkItemService.add( checkitem );
@@ -48,6 +53,7 @@ public class CheckItemController {
      * @return 分页结果数据封装对象
      */
     @PostMapping("/findPage")
+    @PreAuthorize("hasAuthority('CHECKITEM_QUERY')")
     public PageResult add(@RequestBody QueryPageBean queryPageBean) {
         return checkItemService.pageQuery( queryPageBean );
     }
@@ -59,6 +65,7 @@ public class CheckItemController {
      * @return 成功或失败对应提示
      */
     @DeleteMapping("/delete/{id}")
+    @PreAuthorize("hasAuthority('CHECKITEM_DELETE')")
     public Result delete(@PathVariable("id") Integer id) {
         try {
             checkItemService.deleteById( id );
@@ -80,6 +87,7 @@ public class CheckItemController {
      * @return 成功或失败对应提示
      */
     @PutMapping("/edit")
+    @PreAuthorize("hasAuthority('CHECKITEM_EDIT')")
     public Result edit(@RequestBody CheckItem checkitem) {
         try {
             checkItemService.edit( checkitem );
@@ -98,6 +106,7 @@ public class CheckItemController {
      * @return 指定检查项信息
      */
     @GetMapping("/findById/{id}")
+    @PreAuthorize("hasAuthority('CHECKITEM_QUERY')")
     public Result findById(@PathVariable("id") Integer id) {
         try {
             CheckItem checkItem = checkItemService.findById( id );
@@ -115,8 +124,8 @@ public class CheckItemController {
      * @return 检查项信息集合
      */
     @GetMapping("/findAll")
+    @PreAuthorize("hasAuthority('CHECKITEM_QUERY')")
     public Result findAll() {
-
         List<CheckItem> checkItemList = checkItemService.findAll();
         if (CollUtil.isNotEmpty( checkItemList )) {
             //服务调用成功
