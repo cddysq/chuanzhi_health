@@ -56,4 +56,11 @@ public interface SetmealDao {
      * @return 套餐基本信息
      */
     Setmeal findBySetmeal(Integer id);
+
+    /**
+     * 查询预约套餐名并统计套餐预约总数
+     *
+     * @return 套餐名，与之对应的预约总数
+     */
+    List<Map<String, Object>> findSetmealCount();
 }

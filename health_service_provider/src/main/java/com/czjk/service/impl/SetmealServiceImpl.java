@@ -150,6 +150,11 @@ public class SetmealServiceImpl implements SetmealService {
         return setmealDao.findBySetmeal( id );
     }
 
+    @Override
+    public List<Map<String, Object>> findSetmealCount() {
+        return setmealDao.findSetmealCount();
+    }
+
     /**
      * 绑定套餐和检查组的多对多关系
      *
