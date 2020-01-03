@@ -211,7 +211,7 @@
                     date = new Date(cur);
                 } else {
                     let now = new Date();
-                    let d = new Date(this.formatDate(now.getFullYear(), now.getMonth(), 1));
+                    let d = new Date(this.formatDate(now.getFullYear(), now.getMonth()+1, 1));
                     d.setDate(35);
                     date = new Date(this.formatDate(d.getFullYear(), d.getMonth() + 1, 1));
                 }
