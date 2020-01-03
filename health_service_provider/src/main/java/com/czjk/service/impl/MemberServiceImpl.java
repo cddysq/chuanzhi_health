@@ -8,6 +8,9 @@ import com.czjk.service.MemberService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 /**
  * @Author: Haotian
  * @Date: 2020/1/1 12:15
@@ -32,5 +35,12 @@ public class MemberServiceImpl implements MemberService {
             member.setPassword( SecureUtil.md5( password ) );
         }
         memberDao.add( member );
+    }
+
+    @Override
+    public List<Integer> findMemberCountByMonths(List<String> months) {
+        return months.stream()
+                .map( month -> memberDao.findMemberCountBeforeDate( month + ".31" ) )
+                .collect( Collectors.toList() );
     }
 }

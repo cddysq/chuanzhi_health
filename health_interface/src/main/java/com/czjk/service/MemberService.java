@@ -2,6 +2,8 @@ package com.czjk.service;
 
 import com.czjk.pojo.Member;
 
+import java.util.List;
+
 /**
  * @Author: Haotian
  * @Date: 2020/1/1 11:48
@@ -22,4 +24,12 @@ public interface MemberService {
      * @param member 会员信息
      */
     void add(Member member);
+
+    /**
+     * 根据月份统计会员数量
+     *
+     * @param months 当前月份
+     * @return 每月会员总数
+     */
+    List<Integer> findMemberCountByMonths(List<String> months);
 }

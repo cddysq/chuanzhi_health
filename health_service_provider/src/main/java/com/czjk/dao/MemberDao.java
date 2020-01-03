@@ -36,6 +36,12 @@ public interface MemberDao {
 
     void edit(Member member);
 
+    /**
+     * 根据月份统计会员数量
+     *
+     * @param date 当前月最后一天时间
+     * @return 当月会员总数
+     */
     Integer findMemberCountBeforeDate(String date);
 
     Integer findMemberCountByDate(String date);
