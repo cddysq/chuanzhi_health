@@ -30,7 +30,7 @@
     <!--指定服务注册中心地址-->
     <dubbo:registry address="zookeeper://121.36.24.140:2181"/>
     <!--批量扫描-->
-    <dubbo:annotation package="com.czjk.controller"/>
+    <dubbo:annotation package="com.czjk"/>
     <!--
         超时全局设置 10分钟
         check=false 不检查服务提供方，开发阶段建议设置为false
@@ -44,4 +44,7 @@
         <property name="maxInMemorySize" value="4096"/>
         <property name="defaultEncoding" value="UTF-8"/>
     </bean>
+
+    <import resource="spring-redis.xml"/>
+    <import resource="spring-security.xml"/>
 </beans>
