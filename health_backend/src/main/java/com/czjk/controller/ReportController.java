@@ -7,6 +7,7 @@ import com.alibaba.dubbo.config.annotation.Reference;
 import com.czjk.constant.MessageConstant;
 import com.czjk.entity.Result;
 import com.czjk.service.MemberService;
+import com.czjk.service.ReportService;
 import com.czjk.service.SetmealService;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -30,6 +31,8 @@ public class ReportController {
     private MemberService memberService;
     @Reference
     private SetmealService setmealService;
+    @Reference
+    private ReportService reportService;
 
     /**
      * 会员数量统计
@@ -85,6 +88,34 @@ public class ReportController {
             e.printStackTrace();
             //请求失败，回显错误提示
             return Result.builder().flag( false ).message( MessageConstant.GET_SETMEAL_COUNT_REPORT_FAIL ).build();
+        }
+    }
+
+    /**
+     * 运营数据统计
+     *
+     * @return Map数据格式：
+     * reportDate -> 当前时间
+     * todayNewMember -> 本日新增会员数
+     * totalMember -> 总会员数
+     * thisWeekNewMember -> 本周新增会员数
+     * thisMonthNewMember -> 本月新增会员数
+     * todayOrderNumber -> 今日预约数
+     * todayVisitsNumber -> 今日到诊数
+     * thisWeekOrderNumber -> 本周预约数
+     * thisWeekVisitsNumber -> 本周到诊数
+     * thisMonthOrderNumber -> 本月预约数
+     * thisMonthVisitsNumber -> 本月到诊数
+     * hotSetmeal -> List<Setmeal> 热门套餐
+     */
+    @GetMapping("/getBusinessReportData")
+    public Result getBusinessReportData() {
+        try {
+            Map<Object, Object> data = reportService.getBusinessReportData();
+            return Result.builder().flag( true ).message( MessageConstant.GET_BUSINESS_REPORT_SUCCESS ).data( data ).build();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return Result.builder().flag( false ).message( MessageConstant.GET_BUSINESS_REPORT_FAIL ).build();
         }
     }
 }
