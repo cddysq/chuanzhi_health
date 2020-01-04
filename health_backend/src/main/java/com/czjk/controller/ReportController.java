@@ -3,6 +3,10 @@ package com.czjk.controller;
 import cn.hutool.core.convert.Convert;
 import cn.hutool.core.date.DateTime;
 import cn.hutool.core.date.DateUtil;
+import cn.hutool.core.io.IoUtil;
+import cn.hutool.poi.excel.ExcelReader;
+import cn.hutool.poi.excel.ExcelUtil;
+import cn.hutool.poi.excel.ExcelWriter;
 import com.alibaba.dubbo.config.annotation.Reference;
 import com.czjk.constant.MessageConstant;
 import com.czjk.entity.Result;
@@ -13,10 +17,11 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import javax.servlet.ServletOutputStream;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.File;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -117,5 +122,64 @@ public class ReportController {
             e.printStackTrace();
             return Result.builder().flag( false ).message( MessageConstant.GET_BUSINESS_REPORT_FAIL ).build();
         }
+    }
+
+    /**
+     * 导出运营数据Excel报表
+     *
+     * @return 是否导出成功
+     */
+    @GetMapping("/exportBusinessReport")
+    public Result exportBusinessReport(HttpServletRequest request, HttpServletResponse response) {
+        //创建页面输出流
+        ServletOutputStream outputStream = null;
+        ExcelWriter writer = null;
+        try {
+            outputStream = response.getOutputStream();
+            //远程调用报表服务获取报表数据
+            Map<Object, Object> data = reportService.getBusinessReportData();
+            //获得Excel模板文件绝对路径
+            String filePath = request.getSession().getServletContext().getRealPath( "template" ) + File.separator + "report_template.xlsx";
+
+            //读取excel设置数据
+            ExcelReader excel = ExcelUtil.getReader( filePath );
+            ExcelReader setSheet = excel.setSheet( 0 );
+            setSheet.getCell( 5, 2 ).setCellValue( Convert.toStr( data.get( "reportDate" ) ) );
+            setSheet.getCell( 5, 4 ).setCellValue( Convert.toInt( data.get( "todayNewMember" ) ) );
+            setSheet.getCell( 7, 4 ).setCellValue( Convert.toInt( data.get( "totalMember" ) ) );
+            setSheet.getCell( 5, 5 ).setCellValue( Convert.toInt( data.get( "thisWeekNewMember" ) ) );
+            setSheet.getCell( 7, 5 ).setCellValue( Convert.toInt( data.get( "thisMonthNewMember" ) ) );
+            setSheet.getCell( 5, 7 ).setCellValue( Convert.toInt( data.get( "todayOrderNumber" ) ) );
+            setSheet.getCell( 7, 7 ).setCellValue( Convert.toInt( data.get( "todayVisitsNumber" ) ) );
+            setSheet.getCell( 5, 8 ).setCellValue( Convert.toInt( data.get( "thisWeekOrderNumber" ) ) );
+            setSheet.getCell( 7, 8 ).setCellValue( Convert.toInt( data.get( "thisWeekVisitsNumber" ) ) );
+            setSheet.getCell( 5, 9 ).setCellValue( Convert.toInt( data.get( "thisMonthOrderNumber" ) ) );
+            setSheet.getCell( 7, 9 ).setCellValue( Convert.toInt( data.get( "thisMonthVisitsNumber" ) ) );
+            List<Map> hotSetmeal = Convert.toList( Map.class, data.get( "hotSetmeal" ) );
+            int row = 12;
+            for (Map map : hotSetmeal) {
+                setSheet.getCell( 4, row ).setCellValue( Convert.toStr( map.get( "name" ) ) );
+                setSheet.getCell( 5, row ).setCellValue( Convert.toLong( map.get( "setmeal_count" ) ) );
+                setSheet.getCell( 5, row ).setCellValue( Convert.toBigDecimal( map.get( "proportion" ) ).doubleValue() );
+                row++;
+            }
+
+            //写出excel
+            writer = excel.getWriter();
+            //代表的是Excel文件类型
+            response.setContentType( "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=utf-8" );
+            //指定以附件形式进行下载
+            response.setHeader( "Content-Disposition", "attachment;filename=report.xlsx" );
+            writer.flush( outputStream, true );
+            return Result.builder().flag( true ).message( MessageConstant.GET_BUSINESS_REPORT_SUCCESS ).build();
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            // 关闭writer，释放内存
+            Objects.requireNonNull( writer ).close();
+            //关闭输出Servlet流
+            IoUtil.close( outputStream );
+        }
+        return Result.builder().flag( false ).message( MessageConstant.GET_BUSINESS_REPORT_FAIL ).build();
     }
 }
