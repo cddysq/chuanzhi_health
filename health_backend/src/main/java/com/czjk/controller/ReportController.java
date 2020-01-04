@@ -160,7 +160,7 @@ public class ReportController {
             for (Map map : hotSetmeal) {
                 setSheet.getCell( 4, row ).setCellValue( Convert.toStr( map.get( "name" ) ) );
                 setSheet.getCell( 5, row ).setCellValue( Convert.toLong( map.get( "setmeal_count" ) ) );
-                setSheet.getCell( 5, row ).setCellValue( Convert.toBigDecimal( map.get( "proportion" ) ).doubleValue() );
+                setSheet.getCell( 6, row ).setCellValue( Convert.toBigDecimal( map.get( "proportion" ) ).doubleValue() );
                 row++;
             }
 
@@ -174,12 +174,12 @@ public class ReportController {
             return Result.builder().flag( true ).message( MessageConstant.GET_BUSINESS_REPORT_SUCCESS ).build();
         } catch (Exception e) {
             e.printStackTrace();
+            return Result.builder().flag( false ).message( MessageConstant.GET_BUSINESS_REPORT_FAIL ).build();
         } finally {
             // 关闭writer，释放内存
             Objects.requireNonNull( writer ).close();
             //关闭输出Servlet流
             IoUtil.close( outputStream );
         }
-        return Result.builder().flag( false ).message( MessageConstant.GET_BUSINESS_REPORT_FAIL ).build();
     }
 }
