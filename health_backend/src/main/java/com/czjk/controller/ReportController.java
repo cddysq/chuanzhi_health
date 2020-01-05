@@ -133,6 +133,7 @@ public class ReportController {
     public Result exportBusinessReport(HttpServletRequest request, HttpServletResponse response) {
         //创建页面输出流
         ServletOutputStream outputStream = null;
+        //创建excel输出流
         ExcelWriter writer = null;
         try {
             outputStream = response.getOutputStream();
@@ -171,14 +172,13 @@ public class ReportController {
             //指定以附件形式进行下载
             response.setHeader( "Content-Disposition", "attachment;filename=report.xlsx" );
             writer.flush( outputStream, true );
-            return Result.builder().flag( true ).message( MessageConstant.GET_BUSINESS_REPORT_SUCCESS ).build();
+            return null;
         } catch (Exception e) {
             e.printStackTrace();
             return Result.builder().flag( false ).message( MessageConstant.GET_BUSINESS_REPORT_FAIL ).build();
         } finally {
             // 关闭writer，释放内存
             Objects.requireNonNull( writer ).close();
-            //关闭输出Servlet流
             IoUtil.close( outputStream );
         }
     }

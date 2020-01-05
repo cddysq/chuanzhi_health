@@ -31,7 +31,7 @@ public class ReportServiceImpl implements ReportService {
     public Map<Object, Object> getBusinessReportData() {
         //当前时间
         DateTime date = DateUtil.date();
-        String today = Convert.toStr( date );
+        String today = DateUtil.format( date,"yyyy-MM-dd" );
 
         //本周起始时间
         String thisWeek = Convert.toStr( DateUtil.beginOfWeek( date ) );
