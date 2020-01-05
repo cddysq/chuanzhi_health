@@ -28,10 +28,10 @@ public class ReportServiceImpl implements ReportService {
     private OrderDao orderDao;
 
     @Override
-    public Map<Object, Object> getBusinessReportData() {
+    public Map<String, Object> getBusinessReportData() {
         //当前时间
         DateTime date = DateUtil.date();
-        String today = DateUtil.format( date,"yyyy-MM-dd" );
+        String today = DateUtil.format( date, "yyyy-MM-dd" );
 
         //本周起始时间
         String thisWeek = Convert.toStr( DateUtil.beginOfWeek( date ) );
@@ -64,7 +64,7 @@ public class ReportServiceImpl implements ReportService {
         //热门套餐查询（取前4）
         List<Map<String, Object>> hotSetmeal = orderDao.findHotSetmeal();
 
-        return MapUtil.builder()
+        return MapUtil.<String, Object>builder()
                 .put( "reportDate", today )
                 .put( "todayNewMember", todayNewMember )
                 .put( "totalMember", totalMember )

@@ -13,6 +13,11 @@ import com.czjk.entity.Result;
 import com.czjk.service.MemberService;
 import com.czjk.service.ReportService;
 import com.czjk.service.SetmealService;
+import net.sf.jasperreports.engine.JasperCompileManager;
+import net.sf.jasperreports.engine.JasperExportManager;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -116,7 +121,7 @@ public class ReportController {
     @GetMapping("/getBusinessReportData")
     public Result getBusinessReportData() {
         try {
-            Map<Object, Object> data = reportService.getBusinessReportData();
+            Map<String, Object> data = reportService.getBusinessReportData();
             return Result.builder().flag( true ).message( MessageConstant.GET_BUSINESS_REPORT_SUCCESS ).data( data ).build();
         } catch (Exception e) {
             e.printStackTrace();
@@ -129,7 +134,7 @@ public class ReportController {
      *
      * @return 是否导出成功
      */
-    @GetMapping("/exportBusinessReport")
+    @GetMapping("/exportBusinessReport4Excel")
     public Result exportBusinessReport(HttpServletRequest request, HttpServletResponse response) {
         //创建页面输出流
         ServletOutputStream outputStream = null;
@@ -138,12 +143,12 @@ public class ReportController {
         try {
             outputStream = response.getOutputStream();
             //远程调用报表服务获取报表数据
-            Map<Object, Object> data = reportService.getBusinessReportData();
+            Map<String, Object> data = reportService.getBusinessReportData();
             //获得Excel模板文件绝对路径
-            String filePath = request.getSession().getServletContext().getRealPath( "template" ) + File.separator + "report_template.xlsx";
+            String excelPath = request.getSession().getServletContext().getRealPath( "template" ) + File.separator + "report_template.xlsx";
 
             //读取excel设置数据
-            ExcelReader excel = ExcelUtil.getReader( filePath );
+            ExcelReader excel = ExcelUtil.getReader( excelPath );
             ExcelReader setSheet = excel.setSheet( 0 );
             setSheet.getCell( 5, 2 ).setCellValue( Convert.toStr( data.get( "reportDate" ) ) );
             setSheet.getCell( 5, 4 ).setCellValue( Convert.toInt( data.get( "todayNewMember" ) ) );
@@ -180,6 +185,43 @@ public class ReportController {
             // 关闭writer，释放内存
             Objects.requireNonNull( writer ).close();
             IoUtil.close( outputStream );
+        }
+    }
+
+    /**
+     * 导出运营数据PDF报表
+     *
+     * @return 是否导出成功
+     */
+    @GetMapping("/exportBusinessReport4PDF")
+    public Result exportBusinessReport4PDF(HttpServletRequest request, HttpServletResponse response) {
+        try {
+            //远程调用报表服务获取报表数据
+            Map<String, Object> data = reportService.getBusinessReportData();
+            List<Map> hotSetmeal = Convert.toList( Map.class, data.get( "hotSetmeal" ) );
+
+            //获得pdf模板文件绝对路径
+            String jrxmlPath = request.getSession().getServletContext().getRealPath( "template" ) + File.separator + "health_business.jrxml";
+            String jasperPath = request.getSession().getServletContext().getRealPath( "template" ) + File.separator + "health_business.jasper";
+            //编译模板
+            JasperCompileManager.compileReportToFile( jrxmlPath, jasperPath );
+            //填充数据---使用JavaBean数据源方式填充
+            JasperPrint jasperPrint = JasperFillManager.fillReport( jasperPath, data, new JRBeanCollectionDataSource( hotSetmeal ) );
+
+            ServletOutputStream outputStream = response.getOutputStream();
+            //代表的是pdf文件类型
+            response.setContentType( "application/pdf;charset=utf-8" );
+            //指定以附件形式进行下载
+            response.setHeader( "Content-Disposition", "attachment;filename=report.pdf" );
+            //输出文件
+            JasperExportManager.exportReportToPdfStream( jasperPrint, outputStream );
+
+            outputStream.flush();
+            outputStream.close();
+            return null;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return Result.builder().flag( false ).message( MessageConstant.GET_BUSINESS_REPORT_FAIL ).build();
         }
     }
 }

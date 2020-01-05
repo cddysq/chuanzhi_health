@@ -33,6 +33,7 @@
         <div class="box" style="height: 900px">
             <div class="excelTitle">
                 <el-button @click="exportExcel">导出Excel</el-button>
+                <el-button @click="exportPDF">导出PDF</el-button>
                 运营数据统计
             </div>
             <div class="excelTime">当前时间：{{reportData.reportDate}}</div>
@@ -127,7 +128,10 @@
         },
         methods: {
             exportExcel() {
-                window.location.href = '/report/exportBusinessReport.do';
+                window.location.href = '/report/exportBusinessReport4Excel.do';
+            },
+            exportPDF() {
+                window.location.href = '/report/exportBusinessReport4PDF.do';
             }
         }
     });

@@ -13,5 +13,5 @@ public interface ReportService {
      *
      * @return 运营数据
      */
-    Map<Object, Object> getBusinessReportData();
+    Map<String, Object> getBusinessReportData();
 }
