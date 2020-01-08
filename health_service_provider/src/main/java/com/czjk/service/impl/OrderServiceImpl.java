@@ -1,6 +1,7 @@
 package com.czjk.service.impl;
 
 import cn.hutool.core.convert.Convert;
+import cn.hutool.core.date.DateUtil;
 import cn.hutool.core.util.ObjectUtil;
 import com.alibaba.dubbo.config.annotation.Service;
 import com.czjk.constant.MessageConstant;
@@ -94,7 +95,7 @@ public class OrderServiceImpl implements OrderService {
         Map<String, Object> map = orderDao.findById4Detail( id );
         if (map != null) {
             //处理日期格式
-            String date = Convert.toStr( map.get( "orderDate" ) );
+            String date = DateUtil.format( Convert.toDate( map.get( "orderDate" ) ), "yyyy-MM-dd" );
             map.put( "orderDate", date );
         }
         return map;
