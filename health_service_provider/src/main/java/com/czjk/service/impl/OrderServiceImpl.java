@@ -80,6 +80,7 @@ public class OrderServiceImpl implements OrderService {
                 .orderDate( orderDate )
                 .orderType( Convert.toStr( map.get( "orderType" ) ) )
                 .orderStatus( Order.ORDERSTATUS_NO )
+                .address( Convert.toStr( map.get( "address" ) ) )
                 .setmealId( Convert.toInt( map.get( "setmealId" ) ) ).build();
         orderDao.add( order );
         //更新当日的已预约人数 +1

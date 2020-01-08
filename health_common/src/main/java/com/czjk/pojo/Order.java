@@ -51,6 +51,11 @@ public class Order implements Serializable {
     private String orderStatus;
 
     /**
+     * 预约体检地址
+     */
+    private String address;
+
+    /**
      * 体检套餐id
      */
     private Integer setmealId;

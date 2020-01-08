@@ -39,6 +39,7 @@
                     <p>体检人：{{orderInfo.member}}</p>
                     <p>体检套餐：{{orderInfo.setmeal}}</p>
                     <p>体检日期：{{orderInfo.orderDate}}</p>
+                    <p>体检地址：{{orderInfo.address}}</p>
                     <p>预约类型：{{orderInfo.orderType}}</p>
                 </div>
             </div>
@@ -67,7 +68,7 @@
             orderInfo: {}
         },
         mounted() {
-            axios.get("/order/findById/" + id + ".do?").then((res) => {
+            axios.get("/order/findById/" + id + ".do").then((res) => {
                 if (res.data.flag) {
                     //查询成功
                     this.orderInfo = res.data.data;

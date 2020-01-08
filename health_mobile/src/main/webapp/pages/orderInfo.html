@@ -18,6 +18,8 @@
     <script src="../plugins/vue/vue.js"></script>
     <script src="../plugins/vue/axios-0.18.0.js"></script>
     <script src="../plugins/elementui/index.js"></script>
+    <link rel="stylesheet" href="../plugins/iosselect/iosSelect.css">
+    <script type="text/javascript" src="../plugins/iosselect/iosSelect.js"></script>
     <script>
         const id = getUrlParam("id");
     </script>
@@ -90,6 +92,13 @@
                     <label>身份证号</label>
                     <input v-model="orderInfo.idCard" type="text" class="input-clear" placeholder="请输入身份证号">
                 </div>
+                <div class="input-row">
+                    <label>体检地址</label>
+                    <input v-model="orderInfo.address" id="addressId" type="text" class="input-clear">
+                    <input style="font-size: x-small;" id="showAddress" @click="selectAddress()" type="button"
+                           value="选择地址">
+                </div>
+                <div class="container"></div>
                 <div class="date">
                     <label>体检日期</label>
                     <i class="icon-date" class="picktime"></i>
@@ -109,8 +118,10 @@
             setmeal: {},//套餐信息
             orderInfo: {
                 setmealId: id,
-                sex: '1'
-            }//预约信息
+                sex: '1',
+                address: null,
+            },
+            allAddress: [{id: '10001', value: '演示数据1'}, {id: '10002', value: '演示数据2'}]//预约信息
         },
         methods: {
             //发送验证码
@@ -140,6 +151,36 @@
                     }
                 })
             },
+            selectAddress() {
+                const addressId = document.querySelector('#addressId');// 绑定一个存储结果的元素
+                const showAddress = document.querySelector('#showAddress');  // 绑定一个触发元素
+                const aId = showAddress.dataset['id'];
+                const aName = showAddress.dataset['value'];        // 获取元素的data-value属性值
+                let temp = this.orderInfo; //对象转换接收选中地址value
+                // 实例化组件
+                const bankSelect = new IosSelect(1,
+                    [this.allAddress],
+                    {
+                        container: '.container',
+                        title: '请选择体检地址',
+                        itemHeight: 50,
+                        itemShowCount: 3,
+                        oneLevelId: aId,
+                        callback: function (selectOneObj) { // 用户确认选择后的回调函数
+                            addressId.value = selectOneObj.value;
+                            temp.address = selectOneObj.value;
+                            showAddress.innerHTML = selectOneObj.value;
+                            showAddress.dataset['id'] = selectOneObj.id;
+                            showAddress.dataset['value'] = selectOneObj.value;
+                        },
+                        fallback: function () {
+                            console.log(1);
+                        },
+                        maskCallback: function () {
+                            console.log(2);
+                        }
+                    });
+            },
             //提交预约
             submitOrder() {
                 //对用户输入的身份证号进行校验
@@ -166,6 +207,14 @@
             axios.get("/setmeal/findBySetmeal/" + id + ".do").then((res) => {
                 if (res.data.flag) {
                     this.setmeal = res.data.data;
+                } else {
+                    this.$message.error(res.data.message);
+                }
+            });
+            //发送ajax请求，查询所有地址
+            axios.get("/address/findAll.do").then((res) => {
+                if (res.data.flag) {
+                    this.allAddress = res.data.data;
                 } else {
                     this.$message.error(res.data.message);
                 }

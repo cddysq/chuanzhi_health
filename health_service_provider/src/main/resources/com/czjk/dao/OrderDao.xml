@@ -15,8 +15,8 @@
         <selectKey resultType="int" order="AFTER" keyProperty="id">
             SELECT LAST_INSERT_ID()
         </selectKey>
-        insert into t_order(member_id,orderDate,orderType,orderStatus,setmeal_id)
-        values (#{memberId},#{orderDate},#{orderType},#{orderStatus},#{setmealId})
+        insert into t_order(member_id,orderDate,orderType,orderStatus,address,setmeal_id)
+        values (#{memberId},#{orderDate},#{orderType},#{orderStatus},#{address},#{setmealId})
     </insert>
 
     <!--动态条件查询-->
@@ -46,7 +46,7 @@
 
     <!--根据预约id查询预约信息，包括体检人信息、套餐信息-->
     <select id="findById4Detail" parameterType="int" resultType="map">
-        select m.name member, s.name setmeal, o.orderDate orderDate, o.orderType orderType
+        select m.name member, s.name setmeal, o.orderDate orderDate, o.address address, o.orderType orderType
         from t_order o,
              t_member m,
              t_setmeal s
