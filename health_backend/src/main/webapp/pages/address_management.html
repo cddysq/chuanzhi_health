@@ -10,7 +10,7 @@
     <meta content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no" name="viewport">
     <!-- 引入样式 -->
     <link rel="stylesheet" href="../plugins/elementui/index.css">
-    <link rel="stylesheet" href="../plugins/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="../plugins/font-awesome/css/all.min.css">
     <link rel="stylesheet" href="../css/style.css">
 </head>
 <body class="hold-transition">
@@ -59,29 +59,13 @@
                         </el-pagination>
                     </div>
                     <!-- 新增标签弹层 -->
-                    <div class=" add-form">
+                    <div class="add-form">
                         <el-dialog title="新增地址" :visible.sync="dialogFormVisible">
-                            <el-form ref="dataAddForm" :model="formData" :rules="rules" label-position="right">
-                                <el-row>
-                                    <el-col :span="12">
-                                        <el-form-item prop="name" style="width:540px">
-                                            <el-input v-model="formData.name"/>
-                                        </el-form-item>
-                                    </el-col>
-                                    <el-col :span="12">
-                                        <el-form-item>
-                                            <el-button type="primary" @click="handleAdd()" style="margin-left: 150px">
-                                                确定添加
-                                            </el-button>
-                                        </el-form-item>
-                                    </el-col>
-                                </el-row>
+                            <el-form ref="dataAddForm" :model="formData">
+                                <iframe name="right"  src="min_map.html"
+                                        style="width:800px;height:640px; margin: 0 auto;"
+                                        frameborder="no"></iframe>
                             </el-form>
-                            <!--小地图-->
-                            <iframe name="right" class="el-main" src="baidut.html"
-                                    style="width: 800px;height:540px; margin: 0 auto;"
-                                    frameborder="0"></iframe>
-                            <!--小地图-->
                         </el-dialog>
                     </div>
                 </el-tab-pane>

@@ -68,7 +68,8 @@ public class MessageConstant {
     public static final String GET_SETMEAL_LIST_FAIL = "查询套餐列表数据失败";
 
     public static final String ADD_ADDRESS_SUCCESS = "添加公司地址成功";
-    public static final String ADD_ADDRESS_FAIL = "添加公司地址失败";
+    public static final String ADD_ADDRESS_ERROR = "添加公司地址失败，公司地址已经存在";
+    public static final String ADD_ADDRESS_FAIL = "添加公司地址失败，系统异常，请稍后重试";
     public static final String DELETE_ADDRESS_SUCCESS = "删除公司地址成功";
     public static final String DELETE_ADDRESS_FAIL = "删除公司地址失败";
     public static final String GET_ADDRESS_SUCCESS = "查询公司地址成功";

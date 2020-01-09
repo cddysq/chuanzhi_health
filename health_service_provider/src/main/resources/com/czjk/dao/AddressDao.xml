@@ -28,4 +28,11 @@
         select *
         from t_address
     </select>
+
+    <!--通过名称查询公司-->
+    <select id="findByName" parameterType="string" resultType="Address">
+        SELECT *
+        FROM t_address
+        WHERE name = #{addressName}
+    </select>
 </mapper>

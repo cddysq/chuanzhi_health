@@ -2,6 +2,7 @@ package com.czjk.service;
 
 import com.czjk.entity.PageResult;
 import com.czjk.entity.QueryPageBean;
+import com.czjk.entity.Result;
 import com.czjk.pojo.Address;
 
 import java.util.List;
@@ -37,6 +38,7 @@ public interface AddressService {
     /**
      * 添加公司地址
      * @param address 公司地址名经纬度
+     * @return 地址添加提示
      */
-    void add(Address address);
+    Result add(Address address);
 }

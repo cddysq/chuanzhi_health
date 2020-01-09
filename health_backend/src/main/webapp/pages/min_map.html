@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style type="text/css">
+        body, html {
+            width: 100%;
+            height: 100%;
+            margin: 0;
+            font-family: "微软雅黑";
+            font-size: 14px;
+        }
+
+        #map {
+            height: 540px;
+            width: 780px;
+        }
+
+        #r-result {
+            width: 100%;
+        }
+    </style>
+    <script type="text/javascript" src="//api.map.baidu.com/api?v=2.0&ak=r1XnCPbNZpsUGfyXgTGBzQ1e5XbEzxhy"></script>
+
+    <!-- 页面meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>传智健康</title>
+    <meta name="description" content="传智健康">
+    <meta name="keywords" content="传智健康">
+    <meta content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no" name="viewport">
+    <!-- 引入样式 -->
+    <link rel="stylesheet" href="../plugins/elementui/index.css">
+    <link rel="stylesheet" href="../css/style.css">
+    <!-- 引入组件库 -->
+    <script type="text/javascript" src="../js/jquery.min.js"></script>
+    <script src="../js/vue.js"></script>
+    <script src="../plugins/elementui/index.js"></script>
+    <script src="../js/axios-0.18.0.js"></script>
+</head>
+<body class="hold-transition" style="background-color: white;">
+<div id="app">
+    <div class="app-container">
+        <div class="filter-container">
+            <el-input placeholder="请输入地址" id="suggestId" v-model="address" style="width: 480px;" class="filter-item"
+                      @keyup.enter.native="handleFilter"></el-input>
+            <el-button type="primary" class="butT" @click="handleAdd()">确定添加</el-button>
+        </div>
+    </div>
+</div>
+<div id="map"></div>
+<div id="r-result"></div>
+<div id="searchResultPanel" style="border:1px solid #C0C0C0;width:150px;height:auto; display:none;"></div>
+</body>
+
+<script>
+    // 百度地图API功能
+    function G(id) {
+        return document.getElementById(id);
+    }
+
+    const map = new BMap.Map("map");
+    map.centerAndZoom("武汉", 11);// 初始化地图,设置城市和地图级别。
+
+    let ac = new BMap.Autocomplete(    //建立一个自动完成的对象
+        {
+            "input": "suggestId"
+            , "location": map
+        });
+
+    ac.addEventListener("onhighlight", function (e) {  //鼠标放在下拉列表上的事件
+        let str = "";
+        let _value = e.fromitem.value;
+        let value = "";
+        if (e.fromitem.index > -1) {
+            value = _value.province + _value.city + _value.district + _value.street + _value.business;
+        }
+        str = "FromItem<br />index = " + e.fromitem.index + "<br />value = " + value;
+
+        value = "";
+        if (e.toitem.index > -1) {
+            _value = e.toitem.value;
+            value = _value.province + _value.city + _value.district + _value.street + _value.business;
+        }
+        str += "<br />ToItem<br />index = " + e.toitem.index + "<br />value = " + value;
+        G("searchResultPanel").innerHTML = str;
+    });
+
+    let myValue;
+    ac.addEventListener("onconfirm", function (e) {    //鼠标点击下拉列表后的事件
+        const _value = e.item.value;
+        myValue = _value.province + _value.city + _value.district + _value.street + _value.business;
+        G("searchResultPanel").innerHTML = "onconfirm<br />index = " + e.item.index + "<br />myValue = " + myValue;
+
+        setPlace();
+    });
+
+    function setPlace() {
+        const local = new BMap.LocalSearch(map, { //智能搜索
+            onSearchComplete: myFun
+        });
+        map.clearOverlays();    //清除地图上所有覆盖物
+        function myFun() {
+            const pp = local.getResults().getPoi(0).point;    //获取第一个智能搜索的结果
+            map.centerAndZoom(pp, 18);
+            map.addOverlay(new BMap.Marker(pp));    //添加标注
+        }
+
+        local.search(myValue);
+    }
+</script>
+<script>
+    const vue = new Vue({
+        el: '#app',
+        data: {
+            address: "武汉市"
+        },
+        created() {
+
+        },
+        methods: {
+            handleAdd() {
+                const address = $("#suggestId").val();
+                axios.post("/address/add.do", address).then(res => {
+                    if (res.data.flag) {
+                        this.$message({
+                            message: res.data.message,
+                            type: "success"
+                        });
+                        setTimeout(this.reload, 2000);
+                    } else {
+                        this.$message({
+                            message: res.data.message,
+                            type: "error",
+                            duration: 1000
+                        });
+                    }
+                }).catch()
+            },
+            //重载页面
+            reload() {
+                parent.location.reload();
+            }
+        }
+    });
+</script>
+</html>

@@ -1,5 +1,8 @@
 package com.czjk.controller;
 
+import cn.hutool.core.convert.Convert;
+import cn.hutool.core.util.StrUtil;
+import cn.hutool.core.util.URLUtil;
 import com.alibaba.dubbo.config.annotation.Reference;
 import com.czjk.constant.MessageConstant;
 import com.czjk.entity.PageResult;
@@ -7,6 +10,7 @@ import com.czjk.entity.QueryPageBean;
 import com.czjk.entity.Result;
 import com.czjk.pojo.Address;
 import com.czjk.service.AddressService;
+import com.czjk.utils.MapUtils;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -74,11 +78,17 @@ public class AddressController {
      * @return 成功或失败对应提示
      */
     @PostMapping("/add")
-    public Result add(@RequestBody Address address) {
+    public Result add(@RequestBody String addressName) {
+        //解码url去掉后缀得到真实地址名
+        String name = StrUtil.removeSuffix( URLUtil.decode( addressName ), "=" );
+        //通过工具类拿到经纬度
+        String[] lngAndLat = StrUtil.split( MapUtils.getLngAndLat( name ), "," );
+        Address address = Address.builder().name( name )
+                .longitude( Convert.toBigDecimal( lngAndLat[0] ) )
+                .latitude( Convert.toBigDecimal( lngAndLat[1] ) ).build();
         try {
-            addressService.add(address);
             //服务调用成功
-            return Result.builder().flag( true ).message( MessageConstant.ADD_ADDRESS_SUCCESS ).build();
+            return addressService.add( address );
         } catch (Exception e) {
             //服务调用失败
             return Result.builder().flag( false ).message( MessageConstant.ADD_ADDRESS_FAIL ).build();

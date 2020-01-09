@@ -22,19 +22,30 @@ public interface AddressDao {
 
     /**
      * 根据公司地址id删除公司地址
+     *
      * @param id 公司地址id
      */
     void deleteById(Integer id);
 
     /**
      * 查询所有公司地址
+     *
      * @return 公司地址集合
      */
     List<Address> findAll();
 
     /**
      * 添加公司地址
+     *
      * @param address 公司地址名经纬度
      */
     void add(Address address);
+
+    /**
+     * 更据地址名称称查询公司
+     *
+     * @param addressName 公司名
+     * @return 公司信息
+     */
+    Address findByName(String addressName);
 }

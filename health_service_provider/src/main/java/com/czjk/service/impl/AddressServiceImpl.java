@@ -1,9 +1,11 @@
 package com.czjk.service.impl;
 
 import com.alibaba.dubbo.config.annotation.Service;
+import com.czjk.constant.MessageConstant;
 import com.czjk.dao.AddressDao;
 import com.czjk.entity.PageResult;
 import com.czjk.entity.QueryPageBean;
+import com.czjk.entity.Result;
 import com.czjk.pojo.Address;
 import com.czjk.service.AddressService;
 import com.github.pagehelper.Page;
@@ -48,7 +50,13 @@ public class AddressServiceImpl implements AddressService {
     }
 
     @Override
-    public void add(Address address) {
-        addressDao.add( address );
+    public Result add(Address address) {
+        Address templateAddress = addressDao.findByName( address.getName() );
+        if (templateAddress != null) {
+            return Result.builder().flag( false ).message( MessageConstant.ADD_ADDRESS_ERROR ).build();
+        } else {
+            addressDao.add( address );
+            return Result.builder().flag( true ).message( MessageConstant.ADD_ADDRESS_SUCCESS ).build();
+        }
     }
 }
