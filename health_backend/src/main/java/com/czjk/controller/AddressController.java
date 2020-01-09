@@ -83,9 +83,10 @@ public class AddressController {
         String name = StrUtil.removeSuffix( URLUtil.decode( addressName ), "=" );
         //通过工具类拿到经纬度
         String[] lngAndLat = StrUtil.split( MapUtils.getLngAndLat( name ), "," );
-        Address address = Address.builder().name( name )
-                .longitude( Convert.toBigDecimal( lngAndLat[0] ) )
-                .latitude( Convert.toBigDecimal( lngAndLat[1] ) ).build();
+        Address address = Address.builder()
+                                        .name( name )
+                                        .longitude( Convert.toBigDecimal( lngAndLat[0] ) )
+                                        .latitude( Convert.toBigDecimal( lngAndLat[1] ) ).build();
         try {
             //服务调用成功
             return addressService.add( address );
