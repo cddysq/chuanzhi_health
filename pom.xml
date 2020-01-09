@@ -227,19 +227,9 @@
                 <version>${spring.security.version}</version>
             </dependency>
             <dependency>
-                <groupId>com.github.penggle</groupId>
-                <artifactId>kaptcha</artifactId>
-                <version>2.3.2</version>
-            </dependency>
-            <dependency>
                 <groupId>dom4j</groupId>
                 <artifactId>dom4j</artifactId>
                 <version>1.6.1</version>
-            </dependency>
-            <dependency>
-                <groupId>xml-apis</groupId>
-                <artifactId>xml-apis</artifactId>
-                <version>1.4.01</version>
             </dependency>
             <!--HuTool工具类-->
             <dependency>
