@@ -3,6 +3,12 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd"
          version="4.0">
+
+    <!--默认欢迎页面-->
+    <welcome-file-list>
+        <welcome-file>/pages/main.html</welcome-file>
+    </welcome-file-list>
+
     <!--委派过滤器，用于整合其他框架-->
     <filter>
         <!--整合spring security时，此过滤器的名称固定springSecurityFilterChain-->
