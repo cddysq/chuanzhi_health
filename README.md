@@ -1,3 +1,4 @@
+
 ## 项目描述
 
 传智健康管理系统是一款应用于健康管理机构的业务系统，实现健康管理机构工作内容
@@ -8,3 +9,7 @@
 ## 技术选型如下：
 
 ![技术架构](https://s2.ax1x.com/2019/12/26/lAFGDK.png)
+
+## Thanks
+
+[![JetBrains](images/jetbrains-variant-2.svg)](https://www.jetbrains.com/?from=chuanzhi_health)
