@@ -25,7 +25,7 @@
         <hutool.version>5.0.3</hutool.version>
         <fastjson.version>1.2.62</fastjson.version>
         <lombok.version>1.18.8</lombok.version>
-        <spring.version>5.0.5.RELEASE</spring.version>
+        <spring.version>5.2.3.RELEASE</spring.version>
         <pagehelper.version>5.1.10</pagehelper.version>
         <servlet-api.version>4.0.1</servlet-api.version>
         <dubbo.version>2.6.0</dubbo.version>
