@@ -46,11 +46,7 @@ function getSpecifiedDate(date, days) {
  */
 function checkTelephone(telephone) {
     const reg = /^[1][3,4,5,7,8][0-9]{9}$/;
-    if (!reg.test(telephone)) {
-        return false;
-    } else {
-        return true;
-    }
+    return reg.test(telephone);
 }
 
 /**
