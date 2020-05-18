@@ -6,10 +6,12 @@ import com.github.pagehelper.Page;
 import java.util.List;
 
 /**
- * @Author: Haotian
- * @Date: 2019/12/22 18:57
- * @Description: 检查项数据接口
- */
+ * 检查项数据接口
+ *
+ * @author Haotian
+ * @version 1.0.0
+ * @date 2020/5/18 14:22
+ **/
 public interface CheckItemDao {
     /**
      * 添加检查项

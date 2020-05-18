@@ -8,10 +8,12 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * @Author: Haotian
- * @Date: 2019/12/24 20:01
- * @Description: 检查组数据接口
- */
+ * 检查组数据接口
+ *
+ * @author Haotian
+ * @version 1.0.0
+ * @date 2020/5/18 14:23
+ **/
 public interface CheckGroupDao {
     /**
      * 添加检查组

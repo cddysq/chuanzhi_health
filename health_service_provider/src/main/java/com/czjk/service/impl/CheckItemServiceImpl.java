@@ -14,10 +14,12 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 /**
- * @Author: Haotian
- * @Date: 2019/12/22 18:54
- * @Description: 检查项服务
- */
+ * 检查项服务
+ *
+ * @author Haotian
+ * @version 1.0.0
+ * @date 2020/5/18 14:21
+ **/
 @Service(interfaceClass = CheckItemService.class)
 @Transactional
 public class CheckItemServiceImpl implements CheckItemService {

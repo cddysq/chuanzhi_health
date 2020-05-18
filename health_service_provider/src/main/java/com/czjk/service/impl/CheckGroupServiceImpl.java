@@ -18,10 +18,12 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * @Author: Haotian
- * @Date: 2019/12/24 19:39
- * @Description: 检查组服务
- */
+ * 检查组服务
+ *
+ * @author Haotian
+ * @version 1.0.0
+ * @date 2020/5/18 14:22
+ **/
 @Service(interfaceClass = CheckGroupService.class)
 @Transactional
 public class CheckGroupServiceImpl implements CheckGroupService {

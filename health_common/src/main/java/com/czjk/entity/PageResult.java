@@ -9,15 +9,17 @@ import java.io.Serializable;
 import java.util.List;
 
 /**
-* @Author: Haotian
-* @Date: 2019/12/22 14:22
-* @Description: 分页结果封装对象
-**/
+ * 分页结果封装对象
+ *
+ * @author Haotian
+ * @version 1.0.0
+ * @date 2020/5/18 14:23
+ **/
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class PageResult implements Serializable{
+public class PageResult implements Serializable {
     private static final long serialVersionUID = 1104113460789764801L;
 
     /**
