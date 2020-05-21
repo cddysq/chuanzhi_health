@@ -19,10 +19,12 @@ import java.io.IOException;
 import java.util.Objects;
 
 /**
- * @Author: Haotian
- * @Date: 2019/12/25 18:44
- * @Description: 体检套餐管理
- */
+ * 体检套餐管理
+ *
+ * @author Haotian
+ * @version 1.0.0
+ * @date 2020/5/21 15:02
+ **/
 @RestController
 @RequestMapping("/setmeal")
 public class SetmealController {

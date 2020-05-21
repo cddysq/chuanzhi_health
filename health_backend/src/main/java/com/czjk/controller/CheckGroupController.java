@@ -13,10 +13,12 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 /**
- * @Author: Haotian
- * @Date: 2019/12/24 19:26
- * @Description: 体检检查组管理
- */
+ * 体检检查组管理
+ *
+ * @author Haotian
+ * @version 1.0.0
+ * @date 2020/5/21 15:00
+ **/
 @RestController
 @RequestMapping("/checkgroup")
 public class CheckGroupController {

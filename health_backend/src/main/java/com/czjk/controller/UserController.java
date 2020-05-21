@@ -9,10 +9,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
- * @Author: Haotian
- * @Date: 2020/1/3 9:56
- * @Description: 用户管理
- */
+ * 用户管理
+ *
+ * @author Haotian
+ * @version 1.0.0
+ * @date 2020/5/21 15:02
+ **/
 @RestController
 @RequestMapping("/user")
 public class UserController {

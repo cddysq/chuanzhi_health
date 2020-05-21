@@ -18,10 +18,12 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * @Author: Haotian
- * @Date: 2019/12/26 20:54
- * @Description: 预约设置
- */
+ * 预约设置
+ *
+ * @author Haotian
+ * @version 1.0.0
+ * @date 2020/5/21 15:01
+ **/
 @RestController
 @RequestMapping("/ordersetting")
 public class OrderSettingController {

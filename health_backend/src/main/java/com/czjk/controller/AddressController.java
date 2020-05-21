@@ -16,10 +16,12 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 /**
- * @Author: Haotian
- * @Date: 2020/1/7 9:02
- * @Description: 地址管理
- */
+ * 地址管理
+ *
+ * @author Haotian
+ * @version 1.0.0
+ * @date 2020/5/21 14:59
+ **/
 @RestController
 @RequestMapping("/address")
 public class AddressController {
@@ -84,9 +86,9 @@ public class AddressController {
         //通过工具类拿到经纬度
         String[] lngAndLat = StrUtil.split( MapUtils.getLngAndLat( name ), "," );
         Address address = Address.builder()
-                                        .name( name )
-                                        .longitude( Convert.toBigDecimal( lngAndLat[0] ) )
-                                        .latitude( Convert.toBigDecimal( lngAndLat[1] ) ).build();
+                .name( name )
+                .longitude( Convert.toBigDecimal( lngAndLat[0] ) )
+                .latitude( Convert.toBigDecimal( lngAndLat[1] ) ).build();
         try {
             //服务调用成功
             return addressService.add( address );

@@ -30,10 +30,12 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 /**
- * @Author: Haotian
- * @Date: 2020/1/3 18:23
- * @Description: 报表操作
- */
+ * 报表操作
+ *
+ * @author Haotian
+ * @version 1.0.0
+ * @date 2020/5/21 15:01
+ **/
 @RestController
 @RequestMapping("/report")
 public class ReportController {
