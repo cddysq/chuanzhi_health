@@ -6,9 +6,11 @@ import java.io.Serializable;
 import java.util.List;
 
 /**
- * @Author: Haotian
- * @Date: 2019/12/22 11:14
- * @Description: 检查组
+ * 检查组
+ *
+ * @author Haotian
+ * @version 1.0.0
+ * @date 2020/5/23 15:39
  **/
 @Data
 @NoArgsConstructor

@@ -1,9 +1,11 @@
 package com.czjk.constant;
 
 /**
- * @Author: Haotian
- * @Date: 2019/12/22 14:17
- * @Description: 消息常量
+ * 消息常量
+ *
+ * @author Haotian
+ * @version 1.0.0
+ * @date 2020/5/23 15:37
  **/
 public class MessageConstant {
     public static final String DELETE_CHECKITEM_FAIL = "删除检查项失败";

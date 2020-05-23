@@ -9,10 +9,12 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 
 /**
- * @Author: Haotian
- * @Date: 2020/1/7 8:40
- * @Description: 地址管理
- */
+ * 地址管理
+ *
+ * @author Haotian
+ * @version 1.0.0
+ * @date 2020/5/23 15:39
+ **/
 @Data
 @NoArgsConstructor
 @AllArgsConstructor

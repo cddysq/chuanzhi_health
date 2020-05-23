@@ -1,15 +1,17 @@
 package com.czjk.constant;
 
 /**
- * @Author: Haotian
- * @Date: 2019/12/27 21:19
- * @Description: redis缓存验证码常量
+ * redis缓存验证码常量
+ *
+ * @author Haotian
+ * @version 1.0.0
+ * @date 2020/5/23 15:38
  **/
 public class RedisMessageConstant {
+
     /**
      * 用于缓存体检预约时发送的验证码
      */
-
     public static final String SENDTYPE_ORDER = "001";
 
     /**

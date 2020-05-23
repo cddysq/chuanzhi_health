@@ -1,9 +1,11 @@
 package com.czjk.constant;
 
 /**
- * @Author: Haotian
- * @Date: 2019/12/27 21:17
- * @Description: redis缓存上传图片名常量
+ * redis缓存上传图片名常量
+ *
+ * @author Haotian
+ * @version 1.0.0
+ * @date 2020/5/23 15:37
  **/
 public class RedisConstant {
     /**

@@ -16,10 +16,12 @@ import java.util.List;
 import java.util.Set;
 
 /**
- * @Author: Haotian
- * @Date: 2020/1/2 18:48
- * @Description: 动态为用户授权
- */
+ * 动态为用户授权
+ *
+ * @author Haotian
+ * @version 1.0.0
+ * @date 2020/5/23 15:35
+ **/
 @Component
 public class SpringSecurityUserServiceImpl implements UserDetailsService {
     @Reference

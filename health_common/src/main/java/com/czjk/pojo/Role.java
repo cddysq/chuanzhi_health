@@ -11,9 +11,11 @@ import java.util.LinkedHashSet;
 import java.util.Set;
 
 /**
- * @Author: Haotian
- * @Date: 2019/12/22 13:40
- * @Description: 角色
+ * 角色
+ *
+ * @author Haotian
+ * @version 1.0.0
+ * @date 2020/5/23 15:35
  **/
 @Data
 @NoArgsConstructor
