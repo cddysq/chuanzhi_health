@@ -12,10 +12,12 @@ import com.qiniu.storage.model.DefaultPutRet;
 import com.qiniu.util.Auth;
 
 /**
- * @Author: Haotian
- * @Date: 2019/12/25 14:49
- * @Description: 七牛云工具类
- */
+ * 七牛云工具类
+ *
+ * @author Haotian
+ * @version 1.0.0
+ * @date 2020/5/26 14:21
+ **/
 public class QiNiuUtils {
     private static final String ACCESSKEY = "H9jH4SEy2dXKqUgcqyv9Zleokamr2DdM6x6LpQvF";
     private static final String SECRETKEY = "eppGy9DIIvwcObRxEyREhRfW2ur5kR97At-Y01No";

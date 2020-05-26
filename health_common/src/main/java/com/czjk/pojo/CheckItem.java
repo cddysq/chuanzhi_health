@@ -5,9 +5,11 @@ import lombok.*;
 import java.io.Serializable;
 
 /**
- * @Author: Haotian
- * @Date: 2019/12/22 11:25
- * @Description: 检查项
+ * 检查项
+ *
+ * @author Haotian
+ * @version 1.0.0
+ * @date 2020/5/26 14:17
  **/
 @Data
 @NoArgsConstructor

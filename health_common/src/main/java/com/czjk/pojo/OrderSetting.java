@@ -9,9 +9,11 @@ import java.io.Serializable;
 import java.util.Date;
 
 /**
- * @Author: Haotian
- * @Date: 2019/12/22 13:57
- * @Description: 预约设置
+ * 预约设置
+ *
+ * @author Haotian
+ * @version 1.0.0
+ * @date 2020/5/26 14:18
  **/
 @Data
 @NoArgsConstructor

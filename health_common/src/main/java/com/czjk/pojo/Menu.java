@@ -1,14 +1,22 @@
 package com.czjk.pojo;
 
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 /**
- * @Author: Haotian
- * @Date: 2019/12/22 13:35
- * @Description: 菜单
+ * 菜单
+ *
+ * @author Haotian
+ * @version 1.0.0
+ * @date 2020/5/26 14:17
  **/
 @Data
 @NoArgsConstructor

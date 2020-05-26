@@ -6,9 +6,11 @@ import java.io.Serializable;
 import java.util.Date;
 
 /**
- * @Author: Haotian
- * @Date: 2019/12/22 12:39
- * @Description: 会员
+ * 会员
+ *
+ * @author Haotian
+ * @version 1.0.0
+ * @date 2020/5/26 14:17
  **/
 @Data
 @NoArgsConstructor

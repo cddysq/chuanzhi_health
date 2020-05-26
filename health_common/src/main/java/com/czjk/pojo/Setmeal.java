@@ -9,9 +9,11 @@ import java.io.Serializable;
 import java.util.List;
 
 /**
- * @Author: Haotian
- * @Date: 2019/12/22 14:01
- * @Description: 体检套餐
+ * 体检套餐
+ *
+ * @author Haotian
+ * @version 1.0.0
+ * @date 2020/5/26 14:19
  **/
 @Data
 @NoArgsConstructor
