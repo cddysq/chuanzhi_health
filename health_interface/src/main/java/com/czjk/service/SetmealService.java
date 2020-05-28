@@ -8,10 +8,12 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * @Author: Haotian
- * @Date: 2019/12/25 19:57
- * @Description: 体检套餐服务接口
- */
+ * 体检套餐服务接口
+ *
+ * @author Haotian
+ * @version 1.0.0
+ * @date 2020/5/28 16:31
+ **/
 public interface SetmealService {
     /**
      * 新增套餐

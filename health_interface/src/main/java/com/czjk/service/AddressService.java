@@ -8,10 +8,12 @@ import com.czjk.pojo.Address;
 import java.util.List;
 
 /**
- * @Author: Haotian
- * @Date: 2020/1/7 9:05
- * @Description: 地址管理服务
- */
+ * 地址管理服务
+ *
+ * @author Haotian
+ * @version 1.0.0
+ * @date 2020/5/28 16:29
+ **/
 public interface AddressService {
 
     /**
@@ -31,12 +33,14 @@ public interface AddressService {
 
     /**
      * 查询所有公司地址
+     *
      * @return 公司地址集合
      */
     List<Address> findAll();
 
     /**
      * 添加公司地址
+     *
      * @param address 公司地址名经纬度
      * @return 地址添加提示
      */

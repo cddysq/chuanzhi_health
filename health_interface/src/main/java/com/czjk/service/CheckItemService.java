@@ -7,10 +7,12 @@ import com.czjk.pojo.CheckItem;
 import java.util.List;
 
 /**
- * @Author: Haotian
- * @Date: 2019/12/22 18:41
- * @Description: 检查项服务接口
- */
+ * 检查项服务接口
+ *
+ * @author Haotian
+ * @version 1.0.0
+ * @date 2020/5/28 16:29
+ **/
 public interface CheckItemService {
 
     /**

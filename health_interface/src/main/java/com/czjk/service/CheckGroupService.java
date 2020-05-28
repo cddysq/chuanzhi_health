@@ -7,10 +7,12 @@ import com.czjk.pojo.CheckGroup;
 import java.util.List;
 
 /**
- * @Author: Haotian
- * @Date: 2019/12/24 19:37
- * @Description: 检查组服务接口
- */
+ * 检查组服务接口
+ *
+ * @author Haotian
+ * @version 1.0.0
+ * @date 2020/5/28 16:29
+ **/
 public interface CheckGroupService {
 
     /**

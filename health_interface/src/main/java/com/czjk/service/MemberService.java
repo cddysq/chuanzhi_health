@@ -5,10 +5,12 @@ import com.czjk.pojo.Member;
 import java.util.List;
 
 /**
- * @Author: Haotian
- * @Date: 2020/1/1 11:48
- * @Description: 会员服务接口
- */
+ * 会员服务接口
+ *
+ * @author Haotian
+ * @version 1.0.0
+ * @date 2020/5/28 16:30
+ **/
 public interface MemberService {
     /**
      * 根据手机号查询会员

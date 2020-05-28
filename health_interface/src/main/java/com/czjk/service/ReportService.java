@@ -3,10 +3,12 @@ package com.czjk.service;
 import java.util.Map;
 
 /**
- * @Author: Haotian
- * @Date: 2020/1/3 21:30
- * @Description: 运营服务接口
- */
+ * 运营服务接口
+ *
+ * @author Haotian
+ * @version 1.0.0
+ * @date 2020/5/28 16:31
+ **/
 public interface ReportService {
     /**
      * 获取运营数据

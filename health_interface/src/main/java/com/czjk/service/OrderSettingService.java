@@ -6,10 +6,12 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * @Author: Haotian
- * @Date: 2019/12/26 21:25
- * @Description: 预约服务接口
- */
+ * 预约服务接口
+ *
+ * @author Haotian
+ * @version 1.0.0
+ * @date 2020/5/28 16:30
+ **/
 public interface OrderSettingService {
     /**
      * 批量导入预约设置数据
