@@ -20,10 +20,12 @@ import javax.servlet.http.HttpServletResponse;
 import java.util.Map;
 
 /**
- * @Author: Haotian
- * @Date: 2020/1/1 11:33
- * @Description: 处理会员相关操作
- */
+ * 处理会员相关操作
+ *
+ * @author Haotian
+ * @version 1.0.0
+ * @date 2020/5/29 17:13
+ **/
 @RestController
 @RequestMapping("/member")
 public class MemberController {

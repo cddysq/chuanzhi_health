@@ -13,10 +13,12 @@ import org.springframework.web.bind.annotation.RestController;
 import redis.clients.jedis.JedisPool;
 
 /**
- * @Author: Haotian
- * @Date: 2019/12/30 19:41
- * @Description: 短信验证码
- */
+ * 短信验证码
+ *
+ * @author Haotian
+ * @version 1.0.0
+ * @date 2020/5/29 17:15
+ **/
 @RestController
 @RequestMapping("/validateCode")
 public class ValidateCodeController {
@@ -26,7 +28,7 @@ public class ValidateCodeController {
     /**
      * 随机生成6位数字验证码
      */
-    private static String authCode = RandomUtil.randomNumbers( 6 );
+    private static final String AUTH_CODE = RandomUtil.randomNumbers( 6 );
 
     /**
      * 用户在线体检预约发送验证码
@@ -38,14 +40,14 @@ public class ValidateCodeController {
     public Result sendAppointmentOrder(@PathVariable("telephone") String telephone) {
         try {
             //给用户发送验证码
-            SMSUtils.sendShortMessage( SMSUtils.VALIDATE_CODE, telephone, authCode );
+            SMSUtils.sendShortMessage( SMSUtils.VALIDATE_CODE, telephone, AUTH_CODE );
         } catch (Exception e) {
             e.printStackTrace();
             //验证码发送失败
             return Result.builder().flag( false ).message( MessageConstant.SEND_VALIDATECODE_FAIL ).build();
         }
         //验证码发送成功,将生成的验证码缓存到redis设置存活时时间(5分钟)
-        jedisPool.getResource().setex( telephone + RedisMessageConstant.SENDTYPE_ORDER, 300, authCode );
+        jedisPool.getResource().setex( telephone + RedisMessageConstant.SENDTYPE_ORDER, 300, AUTH_CODE );
         return Result.builder().flag( true ).message( MessageConstant.SEND_VALIDATECODE_SUCCESS ).build();
     }
 
@@ -59,14 +61,14 @@ public class ValidateCodeController {
     public Result send4Login(@PathVariable("telephone") String telephone) {
         try {
             //给用户发送验证码
-            SMSUtils.sendShortMessage( SMSUtils.VALIDATE_CODE, telephone, authCode );
+            SMSUtils.sendShortMessage( SMSUtils.VALIDATE_CODE, telephone, AUTH_CODE );
         } catch (Exception e) {
             e.printStackTrace();
             //验证码发送失败
             return Result.builder().flag( false ).message( MessageConstant.SEND_VALIDATECODE_FAIL ).build();
         }
         //验证码发送成功,将登录验证码缓存到redis设置存活时时间(5分钟)
-        jedisPool.getResource().setex( telephone + RedisMessageConstant.SENDTYPE_LOGIN, 300, authCode );
+        jedisPool.getResource().setex( telephone + RedisMessageConstant.SENDTYPE_LOGIN, 300, AUTH_CODE );
         return Result.builder().flag( true ).message( MessageConstant.SEND_VALIDATECODE_SUCCESS ).build();
     }
 }

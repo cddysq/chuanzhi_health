@@ -13,10 +13,12 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 /**
- * @Author: Haotian
- * @Date: 2019/12/28 10:20
- * @Description: 套餐管理
- */
+ * 套餐管理
+ *
+ * @author Haotian
+ * @version 1.0.0
+ * @date 2020/5/29 17:14
+ **/
 @RestController
 @RequestMapping("/setmeal")
 public class SetmealController {

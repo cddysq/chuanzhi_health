@@ -1,17 +1,16 @@
 package com.czjk.jobs;
 
-import cn.hutool.core.collection.CollUtil;
 import com.czjk.constant.RedisConstant;
 import org.springframework.beans.factory.annotation.Autowired;
 import redis.clients.jedis.JedisPool;
 
-import java.util.Set;
-
 /**
- * @Author: Haotian
- * @Date: 2019/12/26 19:45
- * @Description: 一月一次清理redis内存
- */
+ * 一月一次清理redis内存
+ *
+ * @author Haotian
+ * @version 1.0.0
+ * @date 2020/5/29 17:12
+ **/
 public class ClearRedis {
     @Autowired
     private JedisPool jedisPool;

@@ -15,10 +15,12 @@ import redis.clients.jedis.JedisPool;
 import java.util.Map;
 
 /**
- * @Author: Haotian
- * @Date: 2019/12/30 20:44
- * @Description: 体检预约处理
- */
+ * 体检预约处理
+ *
+ * @author Haotian
+ * @version 1.0.0
+ * @date 2020/5/29 17:14
+ **/
 @RestController
 @RequestMapping("/order")
 public class OrderController {

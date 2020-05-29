@@ -9,10 +9,12 @@ import redis.clients.jedis.JedisPool;
 import java.util.Set;
 
 /**
- * @Author: Haotian
- * @Date: 2019/12/26 19:20
- * @Description: ；两小时清理一次七牛垃圾图片
- */
+ * 两小时清理一次七牛垃圾图片
+ *
+ * @author Haotian
+ * @version 1.0.0
+ * @date 2020/5/29 17:12
+ **/
 public class ClearImgJob {
     @Autowired
     private JedisPool jedisPool;
