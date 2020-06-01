@@ -28,7 +28,7 @@ public class ValidateCodeController {
     /**
      * 随机生成6位数字验证码
      */
-    private static final String AUTH_CODE = RandomUtil.randomNumbers( 6 );
+    private static final String authCode = RandomUtil.randomNumbers( 6 );
 
     /**
      * 用户在线体检预约发送验证码
@@ -40,14 +40,14 @@ public class ValidateCodeController {
     public Result sendAppointmentOrder(@PathVariable("telephone") String telephone) {
         try {
             //给用户发送验证码
-            SMSUtils.sendShortMessage( SMSUtils.VALIDATE_CODE, telephone, AUTH_CODE );
+            SMSUtils.sendShortMessage( SMSUtils.VALIDATE_CODE, telephone, authCode );
         } catch (Exception e) {
             e.printStackTrace();
             //验证码发送失败
             return Result.builder().flag( false ).message( MessageConstant.SEND_VALIDATECODE_FAIL ).build();
         }
         //验证码发送成功,将生成的验证码缓存到redis设置存活时时间(5分钟)
-        jedisPool.getResource().setex( telephone + RedisMessageConstant.SENDTYPE_ORDER, 300, AUTH_CODE );
+        jedisPool.getResource().setex( telephone + RedisMessageConstant.SENDTYPE_ORDER, 300, authCode );
         return Result.builder().flag( true ).message( MessageConstant.SEND_VALIDATECODE_SUCCESS ).build();
     }
 
@@ -61,14 +61,14 @@ public class ValidateCodeController {
     public Result send4Login(@PathVariable("telephone") String telephone) {
         try {
             //给用户发送验证码
-            SMSUtils.sendShortMessage( SMSUtils.VALIDATE_CODE, telephone, AUTH_CODE );
+            SMSUtils.sendShortMessage( SMSUtils.VALIDATE_CODE, telephone, authCode );
         } catch (Exception e) {
             e.printStackTrace();
             //验证码发送失败
             return Result.builder().flag( false ).message( MessageConstant.SEND_VALIDATECODE_FAIL ).build();
         }
         //验证码发送成功,将登录验证码缓存到redis设置存活时时间(5分钟)
-        jedisPool.getResource().setex( telephone + RedisMessageConstant.SENDTYPE_LOGIN, 300, AUTH_CODE );
+        jedisPool.getResource().setex( telephone + RedisMessageConstant.SENDTYPE_LOGIN, 300, authCode );
         return Result.builder().flag( true ).message( MessageConstant.SEND_VALIDATECODE_SUCCESS ).build();
     }
 }
