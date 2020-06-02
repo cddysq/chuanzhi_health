@@ -7,10 +7,12 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * @Author: Haotian
- * @Date: 2019/12/27 18:06
- * @Description: 预约数据接口
- */
+ * 预约数据接口
+ *
+ * @author Haotian
+ * @version 1.0.0
+ * @date 2020/6/2 17:28
+ **/
 public interface OrderSettingDao {
     /**
      * 根据日期查询是否存在预约

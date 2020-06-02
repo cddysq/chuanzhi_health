@@ -5,10 +5,12 @@ import com.czjk.pojo.Role;
 import java.util.Set;
 
 /**
- * @Author: Haotian
- * @Date: 2020/1/2 19:23
- * @Description: 角色数据接口
- */
+ * 角色数据接口
+ *
+ * @author Haotian
+ * @version 1.0.0
+ * @date 2020/6/2 17:28
+ **/
 public interface RoleDao {
     /**
      * 根据用户id查询角色

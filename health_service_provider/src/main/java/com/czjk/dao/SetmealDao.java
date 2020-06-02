@@ -7,10 +7,12 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * @Author: Haotian
- * @Date: 2019/12/25 20:04
- * @Description: 套餐数据接口
- */
+ * 套餐数据接口
+ *
+ * @author Haotian
+ * @version 1.0.0
+ * @date 2020/6/2 17:29
+ **/
 public interface SetmealDao {
     /**
      * 添加套餐

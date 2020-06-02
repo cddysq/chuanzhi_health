@@ -6,10 +6,12 @@ import com.github.pagehelper.Page;
 import java.util.List;
 
 /**
- * @Author: Haotian
- * @Date: 2019/12/30 21:40
- * @Description: 会员接口
- */
+ * 会员接口
+ *
+ * @author Haotian
+ * @version 1.0.0
+ * @date 2020/6/2 17:27
+ **/
 public interface MemberDao {
     List<Member> findAll();
 

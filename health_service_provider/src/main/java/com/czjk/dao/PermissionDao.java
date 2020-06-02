@@ -5,10 +5,12 @@ import com.czjk.pojo.Permission;
 import java.util.Set;
 
 /**
- * @Author: Haotian
- * @Date: 2020/1/2 19:26
- * @Description: 权限数据接口
- */
+ * 权限数据接口
+ *
+ * @author Haotian
+ * @version 1.0.0
+ * @date 2020/6/2 17:28
+ **/
 public interface PermissionDao {
     /**
      * 根据用户角色id查询权限

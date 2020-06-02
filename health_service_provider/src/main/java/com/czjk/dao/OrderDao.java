@@ -6,10 +6,12 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * @Author: Haotian
- * @Date: 2019/12/30 21:47
- * @Description: 订单接口
- */
+ * 订单接口
+ *
+ * @author Haotian
+ * @version 1.0.0
+ * @date 2020/6/2 17:27
+ **/
 public interface OrderDao {
     /**
      * 添加体检预约信息
