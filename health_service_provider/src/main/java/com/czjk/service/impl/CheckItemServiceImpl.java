@@ -21,7 +21,7 @@ import java.util.List;
  * @date 2020/5/18 14:21
  **/
 @Service(interfaceClass = CheckItemService.class)
-@Transactional
+@Transactional(rollbackFor = Exception.class)
 public class CheckItemServiceImpl implements CheckItemService {
     @Autowired
     private CheckItemDao checkItemDao;

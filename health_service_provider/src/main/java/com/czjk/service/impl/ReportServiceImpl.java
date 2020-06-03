@@ -15,12 +15,14 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * @Author: Haotian
- * @Date: 2020/1/3 21:35
- * @Description: 运营数据统计服务
- */
+ * 运营数据统计服务
+ *
+ * @author Haotian
+ * @version 1.0.0
+ * @date 2020/6/3 15:11
+ **/
 @Service(interfaceClass = ReportService.class)
-@Transactional
+@Transactional(rollbackFor = Exception.class)
 public class ReportServiceImpl implements ReportService {
     @Autowired
     private MemberDao memberDao;

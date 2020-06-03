@@ -25,7 +25,7 @@ import java.util.Map;
  * @date 2020/5/18 14:22
  **/
 @Service(interfaceClass = CheckGroupService.class)
-@Transactional
+@Transactional(rollbackFor = Exception.class)
 public class CheckGroupServiceImpl implements CheckGroupService {
     @Autowired
     private CheckGroupDao checkGroupDao;

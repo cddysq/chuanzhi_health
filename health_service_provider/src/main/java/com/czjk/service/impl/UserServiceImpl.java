@@ -15,12 +15,14 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.Set;
 
 /**
- * @Author: Haotian
- * @Date: 2020/1/2 19:18
- * @Description: 用户服务
- */
+ * 用户服务
+ *
+ * @author Haotian
+ * @version 1.0.0
+ * @date 2020/6/3 15:13
+ **/
 @Service(interfaceClass = UserService.class)
-@Transactional
+@Transactional(rollbackFor = Exception.class)
 public class UserServiceImpl implements UserService {
     @Autowired
     private UserDao userDao;

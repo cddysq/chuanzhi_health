@@ -27,12 +27,14 @@ import java.util.Map;
 import java.util.Objects;
 
 /**
- * @Author: Haotian
- * @Date: 2019/12/25 20:02
- * @Description: 体检套餐服务实现类
- */
+ * 体检套餐服务实现类
+ *
+ * @author Haotian
+ * @version 1.0.0
+ * @date 2020/6/3 15:12
+ **/
 @Service(interfaceClass = SetmealService.class)
-@Transactional
+@Transactional(rollbackFor = Exception.class)
 public class SetmealServiceImpl implements SetmealService {
     @Autowired
     private SetmealDao setmealDao;

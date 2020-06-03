@@ -21,12 +21,14 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * @Author: Haotian
- * @Date: 2019/12/30 21:26
- * @Description: 体检预约服务
- */
+ * 体检预约服务
+ *
+ * @author Haotian
+ * @version 1.0.0
+ * @date 2020/6/3 15:10
+ **/
 @Service(interfaceClass = OrderService.class)
-@Transactional
+@Transactional(rollbackFor = Exception.class)
 public class OrderServiceImpl implements OrderService {
     @Autowired
     private OrderSettingDao orderSettingDao;

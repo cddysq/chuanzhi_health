@@ -12,12 +12,14 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 /**
- * @Author: Haotian
- * @Date: 2020/1/1 12:15
- * @Description: 会员服务
- */
+ * 会员服务
+ *
+ * @author Haotian
+ * @version 1.0.0
+ * @date 2020/6/3 15:09
+ **/
 @Service(interfaceClass = MemberService.class)
-@Transactional
+@Transactional(rollbackFor = Exception.class)
 public class MemberServiceImpl implements MemberService {
     @Autowired
     private MemberDao memberDao;

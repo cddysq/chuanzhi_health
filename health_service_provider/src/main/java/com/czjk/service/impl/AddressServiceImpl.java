@@ -16,12 +16,14 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 /**
- * @Author: Haotian
- * @Date: 2020/1/7 9:06
- * @Description: 地址服务
- */
+ * 地址服务
+ *
+ * @author Haotian
+ * @version 1.0.0
+ * @date 2020/6/3 15:09
+ **/
 @Service(interfaceClass = AddressService.class)
-@Transactional
+@Transactional(rollbackFor = Exception.class)
 public class AddressServiceImpl implements AddressService {
     @Autowired
     private AddressDao addressDao;
