@@ -16,18 +16,18 @@ import com.aliyuncs.profile.DefaultProfile;
  */
 public class SMSUtils {
 
-    private static final String ACCESSKEYID = "";
-    private static final String ACCESSKEYSECRET = "";
+    private static final String ACCESSKEYID = "LTAI4FvW1pB55RxgiDA4FNJV";
+    private static final String ACCESSKEYSECRET = "e52TSSbx3ZbgUJbU5FUsyUH9z5QgTw";
 
     /**
      * 发送短信验证码
      */
-    public static final String VALIDATE_CODE = "SMS_181491160";
+    public static final String VALIDATE_CODE = "SMS_181855484";
 
     /**
      * 体检预约成功通知
      */
-    public static final String ORDER_NOTICE = "SMS_159771588";
+    public static final String ORDER_NOTICE = "SMS_181855484";
 
     /**
      * 发送短信
@@ -53,8 +53,6 @@ public class SMSUtils {
         try {
             CommonResponse response = client.getCommonResponse( request );
             System.out.println( response.getData() );
-        } catch (ServerException e) {
-            e.printStackTrace();
         } catch (ClientException e) {
             e.printStackTrace();
         }

@@ -8,10 +8,12 @@ import lombok.NoArgsConstructor;
 import java.io.Serializable;
 
 /**
- * @Author: Haotian
- * @Date: 2019/12/22 14:19
- * @Description: 封装返回结果
- */
+ * 统一返回结果
+ *
+ * @author Haotian
+ * @version 1.0.0
+ * @date 2020/6/17 9:39
+ **/
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
