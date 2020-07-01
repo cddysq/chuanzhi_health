@@ -40,7 +40,7 @@
         <spring.security.version>5.0.4.RELEASE</spring.security.version>
         <poi.version>3.17</poi.version>
         <jedis.version>3.1.0-m1</jedis.version>
-        <quartz.version>2.2.1</quartz.version>
+        <quartz.version>2.3.2</quartz.version>
     </properties>
 
     <!-- 依赖管理标签 -->
