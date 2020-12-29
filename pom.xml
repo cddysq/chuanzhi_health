@@ -15,7 +15,7 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>2.4.0</version>
+        <version>2.4.1</version>
         <relativePath/>
     </parent>
 
@@ -31,7 +31,7 @@
         <java.version>11</java.version>
         <hutool.version>5.5.1</hutool.version>
         <fastjson.version>1.2.75</fastjson.version>
-        <spring-cloud.version>2020.0.0-M5</spring-cloud.version>
+        <spring-cloud.version>2020.0.0</spring-cloud.version>
     </properties>
 
     <dependencies>
@@ -92,9 +92,14 @@
     <!-- 镜像仓库地址 -->
     <repositories>
         <repository>
-            <id>spring-milestones</id>
-            <name>Spring Milestones</name>
-            <url>https://repo.spring.io/milestone</url>
+            <id>spring</id>
+            <url>https://maven.aliyun.com/repository/spring</url>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
         </repository>
     </repositories>
 
