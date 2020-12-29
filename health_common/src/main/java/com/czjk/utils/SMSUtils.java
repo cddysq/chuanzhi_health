@@ -5,19 +5,22 @@ import com.aliyuncs.CommonResponse;
 import com.aliyuncs.DefaultAcsClient;
 import com.aliyuncs.IAcsClient;
 import com.aliyuncs.exceptions.ClientException;
-import com.aliyuncs.exceptions.ServerException;
 import com.aliyuncs.http.MethodType;
 import com.aliyuncs.profile.DefaultProfile;
+import lombok.extern.java.Log;
 
 /**
- * @Author: Haotian
- * @Date: 2019/12/28 16:43
- * @Description: 短信发送工具类
- */
+ * 阿里云短信发送工具类
+ *
+ * @author Haotian
+ * @version 2.0
+ * @date 2020/12/29 10:04
+ **/
+@Log
 public class SMSUtils {
 
-    private static final String ACCESSKEYID = "LTAI4FvW1pB55RxgiDA4FNJV";
-    private static final String ACCESSKEYSECRET = "e52TSSbx3ZbgUJbU5FUsyUH9z5QgTw";
+    private static final String ACCESSKEYID = "";
+    private static final String ACCESSKEYSECRET = "";
 
     /**
      * 发送短信验证码
@@ -52,7 +55,7 @@ public class SMSUtils {
         request.putQueryParameter( "TemplateParam", "{\"code\":\"" + authCode + "\"}" );
         try {
             CommonResponse response = client.getCommonResponse( request );
-            System.out.println( response.getData() );
+            log.info( response.getData() );
         } catch (ClientException e) {
             e.printStackTrace();
         }
