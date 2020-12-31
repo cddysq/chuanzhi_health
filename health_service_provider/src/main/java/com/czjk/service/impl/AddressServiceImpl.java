@@ -1,6 +1,8 @@
 package com.czjk.service.impl;
 
-import com.alibaba.dubbo.config.annotation.Service;
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.czjk.constant.MessageConstant;
 import com.czjk.dao.AddressDao;
 import com.czjk.entity.PageResult;
@@ -8,11 +10,10 @@ import com.czjk.entity.QueryPageBean;
 import com.czjk.entity.Result;
 import com.czjk.pojo.Address;
 import com.czjk.service.AddressService;
-import com.github.pagehelper.Page;
-import com.github.pagehelper.PageHelper;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.annotation.Resource;
 import java.util.List;
 
 /**
@@ -22,23 +23,28 @@ import java.util.List;
  * @version 1.0.0
  * @date 2020/6/3 15:09
  **/
-@Service(interfaceClass = AddressService.class)
+@Service
 @Transactional(rollbackFor = Exception.class)
 public class AddressServiceImpl implements AddressService {
-    @Autowired
+
+    @Resource
     private AddressDao addressDao;
 
     @Override
     public PageResult pageQuery(QueryPageBean queryPageBean) {
-        //使用 PageHelper 完成分页查询
-        Page<Address> page = PageHelper.startPage(
-                queryPageBean.getCurrentPage(), queryPageBean.getPageSize() ).
-                doSelectPage( () -> addressDao.selectByCondition( queryPageBean.getQueryString() ) );
+        Page<Address> page = new Page<>();
+        page.setSize( queryPageBean.getPageSize() );
+        page.setCurrent( queryPageBean.getCurrentPage() );
+
+        IPage<Address> iPage = addressDao.selectPage( page,
+                new LambdaQueryWrapper<Address>()
+                        .like( Address::getName, queryPageBean.getQueryString() )
+        );
         return PageResult.builder()
                 //返回总条数
-                .total( page.getTotal() )
+                .total( iPage.getTotal() )
                 //返回分页数据集合
-                .rows( page.getResult() ).build();
+                .rows( iPage.getRecords() ).build();
     }
 
     @Override
@@ -48,17 +54,22 @@ public class AddressServiceImpl implements AddressService {
 
     @Override
     public List<Address> findAll() {
-        return addressDao.findAll();
+        return addressDao.selectList( null );
     }
 
     @Override
     public Result add(Address address) {
-        Address templateAddress = addressDao.findByName( address.getName() );
+        Address templateAddress = addressDao.selectOne(
+                new LambdaQueryWrapper<Address>()
+                        // 根据名称查询地址
+                        .eq( Address::getName, address.getName() )
+        );
         if (templateAddress != null) {
             return Result.builder().flag( false ).message( MessageConstant.ADD_ADDRESS_ERROR ).build();
         } else {
-            addressDao.add( address );
+            addressDao.insert( address );
             return Result.builder().flag( true ).message( MessageConstant.ADD_ADDRESS_SUCCESS ).build();
         }
     }
+
 }
