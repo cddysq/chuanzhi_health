@@ -1,0 +1,26 @@
+# 控制台彩色输出
+spring:
+  output:
+    ansi:
+      enabled: always
+  # 数据源配置
+  datasource:
+    username: root
+    password: AngelBeats
+    url: jdbc:mysql://localhost:3306/health?characterEncoding=UTF-8
+    driver-class-name: com.mysql.cj.jdbc.Driver
+# mp配置
+mybatis-plus:
+  # 配置别名默认为类名
+  type-aliases-package: com.czjk.pojo
+  global-config:
+    db-config:
+      # 配置表明前缀，例如表设计时表名为t_demo，对应entity为demo
+      table-prefix: t_
+  # 输出sql日志
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+logging:
+  level:
+    # 日志级别
+    com.czjk.service: debug

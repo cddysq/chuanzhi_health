@@ -12,6 +12,11 @@
 
     <description>传智健康子工程</description>
 
+    <!-- 集中定义依赖版本号 -->
+    <properties>
+        <mp.version>3.4.1</mp.version>
+    </properties>
+
     <artifactId>health_common</artifactId>
 
     <dependencies>
@@ -37,6 +42,18 @@
             <groupId>org.apache.poi</groupId>
             <artifactId>poi-ooxml</artifactId>
             <version>4.1.2</version>
+        </dependency>
+        <!--数据源-->
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <scope>runtime</scope>
+        </dependency>
+        <!--mp 依赖-->
+        <dependency>
+            <groupId>com.baomidou</groupId>
+            <artifactId>mybatis-plus-boot-starter</artifactId>
+            <version>${mp.version}</version>
         </dependency>
     </dependencies>
 </project>
