@@ -30,7 +30,7 @@
     <properties>
         <java.version>11</java.version>
         <hutool.version>5.5.1</hutool.version>
-        <fastjson.version>1.2.75</fastjson.version>
+        <fastjson.version>1.2.83</fastjson.version>
         <spring-cloud.version>2020.0.0</spring-cloud.version>
     </properties>
 
